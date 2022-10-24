@@ -13,17 +13,54 @@ class Post(db.Model):
     clasification = db.Column(db.String(30), nullable=False)
     xformat = db.Column(db.String(30), nullable=False)
     share = db.Column(db.Integer, nullable=False, default=0)
-    comments = db.relationship('Comment', backref='post')
-    reactions = db.relationship('Reaction', backref='post')
 
-    def __init__(self, page_id, created_time, created_date, message, clasification, xformat, share) -> None:
-        self.page_id = page_id
-        self.created_time = created_time
-        self.created_date = created_date
-        self.message = message
-        self.clasification = clasification
-        self.xformat = xformat
-        self.share = share
+    fields = [
+        "id",
+        "page_id",
+        "created_time",
+        "created_date",
+        "message",
+        "clasification",
+        "xformat",
+        "share"
+    ]
 
-    def __repr__(self) -> str:
-        return f"Publicación: {self.message}"
+    def __validate_params(self, params):
+        """ Validate if sent params are valid """
+        for param in params:
+            if param not in self.fields:
+                print("**************** ERROR POST PARAMS **************")
+
+    def get_all(self, params=None):
+        """ Get all posts """
+        self.__validate_params(params)
+        return self.query.filter_by(**params).all()
+
+    def create(self):
+        """ Create a post using an instance of class """
+        db.session.add(self)
+        db.session.commit()
+
+    def find_by_params(self, params):
+        """ Get the first coincidence to the given params """
+        self.__validate_params(params)
+        return self.query.filter_by(**params).first()
+
+    def update(self, id, params):
+        """ Update a post"""
+        post = self.find_by_params({'id': id})
+        if post:
+            for key, value in params.items():
+                setattr(post, key, value)
+                db.session.commit()
+            return self.find_by_params({'id': id})
+        return None
+
+    def destroy(self, post_id):
+        """Destroy an post in  DB"""
+        post = self.find_by_params({"id": post_id})
+        if post:
+            db.session.delete(post)
+            db.session.commit()
+            return True
+        return False

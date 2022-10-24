@@ -11,11 +11,50 @@ class Schedule(db.Model):
     finish_hour = db.Column(db.Time, nullable=False)
     restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"), nullable=False)
 
-    def __init__(self, week_day, start_hour, finish_hour, restaurant_id) -> None:
-        self.week_day = week_day
-        self.start_hour = start_hour
-        self.finish_hour = finish_hour
-        self.restaurant_id = restaurant_id
+    fields = [
+        "id",
+        "week_day",
+        "start_hour",
+        "finish_hour",
+        "restaurant_id"
+    ]
 
-    def __repr__(self) -> str:
-        return f"Horario -> Dia:{self.week_day} Abre:{self.start_hour} Cierra:{self.finish_hour}"
+    def __validate_params(self, params):
+        """ Validate if sent params are valid """
+        for param in params:
+            if param not in self.fields:
+                print("**************** ERROR SCHEDULE PARAMS **************")
+
+    def get_all(self, params=None):
+        """ Get all schedules """
+        self.__validate_params(params)
+        return self.query.filter_by(**params).all()
+
+    def create(self):
+        """ Create a schedule using an instance of class """
+        db.session.add(self)
+        db.session.commit()
+
+    def find_by_params(self, params):
+        """ Get the first coincidence to the given params """
+        self.__validate_params(params)
+        return self.query.filter_by(**params).first()
+
+    def update(self, id, params):
+        """ Update a schedule"""
+        schedule = self.find_by_params({'id': id})
+        if schedule:
+            for key, value in params.items():
+                setattr(schedule, key, value)
+                db.session.commit()
+            return self.find_by_params({'id': id})
+        return None
+
+    def destroy(self, schedule_id):
+        """Destroy an schedule in  DB"""
+        schedule = self.find_by_params({"id": schedule_id})
+        if schedule:
+            db.session.delete(schedule)
+            db.session.commit()
+            return True
+        return False

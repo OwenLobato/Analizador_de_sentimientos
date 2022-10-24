@@ -13,13 +13,52 @@ class Comment(db.Model):
     message = db.Column(db.Text, nullable=False)
     reactions = db.Column(db.Integer, nullable=False, default=0)
 
-    def __init__(self, post_id, profile_id, created_time, created_date, message, reactions) -> None:
-        self.post_id = post_id
-        self.profile_id = profile_id
-        self.created_time = created_time
-        self.created_date = created_date
-        self.message = message
-        self.reactions = reactions
+    fields = [
+        "id",
+        "post_id",
+        "profile_id",
+        "created_time",
+        "created_date",
+        "message"
+        "reactions"
+    ]
 
-    def __repr__(self) -> str:
-        return f"Comentario: {self.message}"
+    def __validate_params(self, params):
+        """ Validate if sent params are valid """
+        for param in params:
+            if param not in self.fields:
+                print("**************** ERROR COMMENT PARAMS **************")
+
+    def get_all(self, params=None):
+        """ Get all comments """
+        self.__validate_params(params)
+        return self.query.filter_by(**params).all()
+
+    def create(self):
+        """ Create a comment using an instance of class """
+        db.session.add(self)
+        db.session.commit()
+
+    def find_by_params(self, params):
+        """ Get the first coincidence to the given params """
+        self.__validate_params(params)
+        return self.query.filter_by(**params).first()
+
+    def update(self, id, params):
+        """ Update a comment"""
+        comment = self.find_by_params({'id': id})
+        if comment:
+            for key, value in params.items():
+                setattr(comment, key, value)
+                db.session.commit()
+            return self.find_by_params({'id': id})
+        return None
+
+    def destroy(self, comment_id):
+        """Destroy an comment in  DB"""
+        comment = self.find_by_params({"id": comment_id})
+        if comment:
+            db.session.delete(comment)
+            db.session.commit()
+            return True
+        return False
