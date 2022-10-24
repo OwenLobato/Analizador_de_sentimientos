@@ -1,5 +1,6 @@
 """ Main flask module"""
 
+import json
 from flask import Flask
 from db import db
 from config import Config
@@ -15,9 +16,22 @@ app.register_blueprint(restaurant_bp)
 
 db.init_app(app)
 
-# @app.route('/')
-# def index():
-#     return '<h1>Created by: Owen Lobato!</h1>'
+@app.route('/')
+def index():
+    """ App routes """
+    routes = {
+        "/auth": [
+            "/register - [GET, POST] - register()",
+            "/login - [GET, POST] - login()",
+            "/logout - [GET, POST] - logout()"
+        ],
+        "/restaurants": [
+            "/ - [GET] - index()",
+            "/create - [GET, POST] - create()"
+        ]
+    }
+    routes = json.dumps(routes, indent=2)
+    return routes
 
 if __name__ == '__main__':
     app.secret_key = 'secret'
