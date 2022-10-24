@@ -15,12 +15,16 @@
     <!-- Navbar  -->
     <header>
         <div>
-            <a href=""></a>
-            <h1>Analizador</h1>
+            <a href="{{ url_for('index') }}"><h1>Analizador</h1></a>
         </div>
         <nav>
-            <a href="">Registrarse</a>
-            <a href="">Iniciar sesión</a>
+            {% if g.user %}
+                <span>{{ g.user.name }}</span>
+                <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+            {% else %}
+            <a href="{{ url_for('auth.register') }}">Registrarse</a>
+            <a href="{{ url_for('auth.login') }}">Iniciar sesión</a>
+            {% endif %}
         </nav>
     </header>
 
