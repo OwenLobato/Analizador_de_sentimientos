@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title %}Crear restaurante{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+
+        <label for="name">Nombre</label>
+        <input type="text" name="name" id="name" required><br>
+
+        <label for="address">Direccion</label>
+        <input type="text" name="address" id="address" required><br>
+
+        <label for="region">Region</label>
+        <input type="text" name="region" id="region" required><br>
+
+        <label for="kind">Tipo</label>
+        <input type="text" name="kind" id="kind" required><br>
+
+        <input type="submit" value="Crear">
+
+    </form>
+{% endblock %}

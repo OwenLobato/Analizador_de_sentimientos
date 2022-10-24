@@ -72,7 +72,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.id
-            return redirect(url_for('index'))
+            return redirect(url_for('restaurant.index'))
         flash(error)
     return render_template('auth/login.html')
 
@@ -80,7 +80,7 @@ def login():
 def logout():
     """ Cerrar sesion """
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('restaurant.index'))
 
 @auth_bp.before_app_request
 def load_logged_user():

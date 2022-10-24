@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title %}Restaurantes{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    {% for restaurant in restaurants %}
+        <article>
+            <header>
+                <h1>{{ restaurant.name }}</h1>
+            </header>
+            <div>
+                <p>{{ restaurant.address }}</p>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock %}
