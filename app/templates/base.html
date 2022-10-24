@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - Analizador</title>
+    <!-- BOOSTRAP -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    {% block customCSS %}{% endblock %} 
+</head>
+<body>
+
+    <!-- Navbar  -->
+    <header>
+        <div>
+            <a href=""></a>
+            <h1>Analizador</h1>
+        </div>
+        <nav>
+            <a href="">Registrarse</a>
+            <a href="">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <section>
+        <!-- Header -->
+        <header>{% block header %}{% endblock %}</header>
+        
+        <!-- Flash messages -->
+        {% for message in get_flashed_messages() %}
+            <div>{{ message }}</div>
+        {% endfor %}
+
+        <!-- Content -->
+        {% block content %}{% endblock %}
+    </section>
+
+</body>
+</html>
