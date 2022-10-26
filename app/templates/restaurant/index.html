@@ -2,13 +2,24 @@
 
 {% block header %}
     <h2>{% block title %}Restaurantes{% endblock %}</h2>
+    {% if g.user %}
+        <a href="{{ url_for('restaurant.create') }}">Nuevo restaurante</a>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     {% for restaurant in restaurants %}
         <article>
             <header>
-                <h1>{{ restaurant.name }}</h1>
+                <div>
+                    <h1>{{ restaurant.name }}</h1>
+                </div>
+                <div>
+                    {% if g.user %}
+                        <a href="{{ url_for('restaurant.update', restaurant_id=restaurant.id) }}">Actualizar</a>
+                        <a href="{{ url_for('restaurant.destroy', restaurant_id=restaurant.id) }}">Eliminar</a>
+                    {% endif %}
+                </div>
             </header>
             <div>
                 <p>{{ restaurant.address }}</p>

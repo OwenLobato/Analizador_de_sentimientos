@@ -16,7 +16,7 @@ app.register_blueprint(restaurant_bp)
 
 db.init_app(app)
 
-@app.route('/')
+@app.route('/routes')
 def index():
     """ App routes """
     routes = {
@@ -27,10 +27,11 @@ def index():
         ],
         "/restaurants": [
             "/ - [GET] - index()",
-            "/create - [GET, POST] - create()"
+            "/create - [GET, POST] - create()",
+            "/<int:restaurant_id>/update - [GET, POST] - update()"
+            "/<int:restaurant_id>/destroy - [GET, POST] - destroy()"
         ]
     }
-    routes = json.dumps(routes, indent=2)
     return routes
 
 if __name__ == '__main__':
