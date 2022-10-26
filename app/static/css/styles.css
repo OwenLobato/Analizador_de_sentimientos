@@ -1,0 +1,110 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+}
+
+/* ---------------- NAV BAR ---------------- */
+.header{
+    background-color: #377ba8;
+}
+
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+.nav a{
+    text-decoration: none;
+    color: white;
+}
+
+.nav nav{
+    display: flex;
+    align-items: center;
+}
+
+.nav nav a{
+    margin: 0 10px;
+}
+
+.nav nav span{
+    margin: 0 10px 0 0;
+    color: #ccc;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+/* ---------------- CONTENT ---------------- */
+.content{
+    max-width: 85%;
+    margin: 10px auto;
+}
+
+.content header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid;
+}
+
+/* ---------------- FLASH MESSAGES ---------------- */
+.flash{
+    display: flex;
+    justify-content: center;
+    background-color: red;
+    color: white;
+    padding: 10px;
+}
+
+/* ---------------- FORMS ---------------- */
+form{
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+form label{
+    font-weight: 600;
+    font-size: 20px;
+    margin: 5px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px;
+}
+
+form input, textarea{
+    font-weight: 300;
+    font-size: 18px;
+    margin: 5px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px;
+}
+
+form input[type=submit]{
+    margin: 10px 0;
+    min-width: 100%;
+    background-color: #377ba8;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+input[type=submit]:hover{
+    background-color: #2c6c97;
+    cursor: pointer;
+}
+
+/* ---------------- LOGIN ---------------- */
+.login{
+    max-width: 40%;
+    margin: 0 auto;
+}
