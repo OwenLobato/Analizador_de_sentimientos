@@ -19,9 +19,18 @@
             <div>
                 <a href="{{ url_for('index') }}"><h1>Analizador</h1></a>
             </div>
+            {% if g.user %}
+                <div class="menu">
+                    <a href="">Restaurantes</a>
+                    <a href="">Cargar datos</a>
+                    <a href="">Sentimientos</a>
+                    <a href="">Estadisticas</a>
+                    <a href="">KPIs</a>
+                </div>
+            {% endif %}
             <nav>
                 {% if g.user %}
-                    <span>{{ g.user.name }}</span>
+                    <span><a href="{{ url_for('index') }}">{{ g.user.name }}</a></span>
                     <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
                 {% else %}
                 <a href="{{ url_for('auth.register') }}">Registrarse</a>
