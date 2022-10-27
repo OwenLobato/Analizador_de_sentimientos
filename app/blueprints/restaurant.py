@@ -1,12 +1,12 @@
+""" RESTAURANT Module """
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for
-from werkzeug.exceptions import abort
-from models.user_model import User
 from models.restaurant_model import Restaurant
 from blueprints.auth import login_required
 
 restaurant_bp = Blueprint('restaurant', __name__, url_prefix='/restaurants')
 
 @restaurant_bp.route('/')
+@login_required
 def index():
     """ Get all restaurants """
     params = request.args

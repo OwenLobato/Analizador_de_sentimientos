@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title %}Usuarios{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    {% for user in users %}
+        <article>
+            <header>
+                <div>
+                    <h1>{{ user.name }}</h1>
+                </div>
+                <div>
+                    {% if g.user %}
+                        <a href="{{ url_for('user.update', user_id=user.id) }}">Actualizar</a>
+                        <a href="{{ url_for('user.destroy', user_id=user.id) }}">Eliminar</a>
+                    {% endif %}
+                </div>
+            </header>
+            <div>
+                <p></p>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock %}

@@ -17,7 +17,7 @@
     <header class="header">
         <div class="nav">
             <div>
-                <a href="{{ url_for('index') }}"><h1>Analizador</h1></a>
+                <a href="{{ url_for('user.index') }}"><h1>Analizador</h1></a>
             </div>
             {% if g.user %}
                 <div class="menu">
@@ -30,7 +30,7 @@
             {% endif %}
             <nav>
                 {% if g.user %}
-                    <span><a href="{{ url_for('index') }}">{{ g.user.name }}</a></span>
+                    <span><a href="{{ url_for('user.update', user_id=g.user.id) }}">{{ g.user.name }}</a></span>
                     <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
                 {% else %}
                 <a href="{{ url_for('auth.register') }}">Registrarse</a>
