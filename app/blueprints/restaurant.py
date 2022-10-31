@@ -1,4 +1,7 @@
 """ RESTAURANT Module """
+from werkzeug.utils import secure_filename
+import os 
+from datetime import datetime
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for
 from models.restaurant_model import Restaurant
 from blueprints.auth import login_required
@@ -93,6 +96,23 @@ def update(restaurant_id):
             error = 'El restaurante con ese id no existe'
         flash(error)
     return render_template('restaurant/update.html', restaurant = restaurant)
+
+@restaurant_bp.route('/<int:restaurant_id>/upload', methods=['GET', 'POST'])
+@login_required
+def upload(restaurant_id):
+    """ Upload data to a restaurant """
+    restaurant = Restaurant().find_by_params({'id': restaurant_id})
+    if request.method == 'POST':
+        excel_data = request.files['data']
+        now = datetime.now()
+        name = f"{str(restaurant.id)}_{now.year}{now.month}{now.day}_{now.hour}{now.minute}{now.second}_{excel_data.filename.replace(' ','_')}"
+        file_name = secure_filename(name)
+        path = 'static/uploads'
+        if not os.path.exists(path):
+            os.makedirs(path)
+        file_path = os.path.abspath(f'{path}/{file_name}')
+        excel_data.save(file_path)
+    return render_template('restaurant/upload.html', restaurant = restaurant)
 
 @restaurant_bp.route('/<int:restaurant_id>/destroy', methods=['GET', 'POST'])
 @login_required

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title %}Cargar datos{% endblock %} - Restaurante '{{ restaurant.name }}'</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">
+
+        <label for="data">Seleccione archivo con extensión ".csv"</label>
+        <input type="file" name="data" id="data" required>
+
+        <input type="submit" value="Cargar">
+
+    </form>
+{% endblock %}

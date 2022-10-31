@@ -21,8 +21,7 @@
             </div>
             {% if g.user %}
                 <div class="menu">
-                    <a href="">Restaurantes</a>
-                    <a href="">Cargar datos</a>
+                    <a href="{{ url_for('restaurant.index') }}">Restaurantes</a>
                     <a href="">Sentimientos</a>
                     <a href="">Estadisticas</a>
                     <a href="">KPIs</a>
