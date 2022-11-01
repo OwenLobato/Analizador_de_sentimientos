@@ -5,6 +5,7 @@
 }
 
 body{
+    background-color: rgb(233, 233, 233);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 20px;
 }
@@ -96,7 +97,7 @@ form label{
     padding: 10px;
 }
 
-form input, textarea{
+form input, textarea, select{
     font-weight: 300;
     font-size: 18px;
     margin: 5px 0;

@@ -10,9 +10,6 @@
         <label for="email">Correo</label>
         <input type="text" name="email" id="email" value="{{ user.email }}" disabled>
 
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" id="password" value="{{ user.password }}" disabled>
-
         <label for="name">Name</label>
         <input type="text" name="name" id="name" value="{{ user.name }}" required>
 
@@ -20,11 +17,17 @@
         <input type="text" name="role" id="role" value="{{ user.role }}" required>
 
         <label for="restaurant_id">Id restaurante</label>
-        {% if user.restaurant_id == None %}
-            <input type="number" name="restaurant_id" id="restaurant_id" value="">
-        {% else %}
-            <input type="number" name="restaurant_id" id="restaurant_id" value="{{ user.restaurant_id }}">
-        {% endif %}
+
+        <select name="restaurant_id" id="restaurant_id">
+            <option value="">Sin restaurante</option>
+            {% for restaurant in restaurants %}
+                {% if user.restaurant_id == restaurant.id %}
+                    <option value="{{ restaurant.id }}" selected>{{ restaurant.name }}</option>
+                {% else %}
+                    <option value="{{ restaurant.id }}">{{ restaurant.name }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
 
         <input type="submit" value="Actualizar">
 

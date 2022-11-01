@@ -11,6 +11,7 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     """ Registar usuario """
+    restaurants = Restaurant().get_all(request.args)
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -53,7 +54,7 @@ def register():
         else:
             error = f"El correo '{user_fetch.email}' ya existe"
         flash(error)
-    return render_template('auth/register.html')
+    return render_template('auth/register.html', restaurants = restaurants)
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():

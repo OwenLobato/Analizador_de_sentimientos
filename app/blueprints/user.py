@@ -19,6 +19,7 @@ def index():
 @login_required
 def update(user_id):
     """ Update user """
+    restaurants = Restaurant().get_all(request.args)
     user = User().find_by_params({'id': user_id})
     if request.method == 'POST':
         error = None
@@ -62,7 +63,7 @@ def update(user_id):
         else:
             error = 'El user con ese id no existe'
         flash(error)
-    return render_template('user/update.html', user = user)
+    return render_template('user/update.html', user = user, restaurants = restaurants)
 
 @user_bp.route('/<int:user_id>/destroy', methods=['GET', 'POST'])
 @login_required
