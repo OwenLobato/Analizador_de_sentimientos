@@ -2,6 +2,7 @@
 
 {% block header %}
     <h2>{% block title %}Actualizar restaurante{% endblock %}</h2>
+    <a href="{{ url_for('restaurant.page', restaurant_id=restaurant.id) }}">Actualizar pagina</a>
 {% endblock %}
 
 {% block content %}
