@@ -41,12 +41,13 @@ def page(restaurant_id):
                 error = "Se requiere la cantidad de seguidores"
 
             if error is not None:
-                flash(error)
+                flash(error, 'error')
             else:
                 page = Page(**params)
                 page.create()
+                flash('Datos de la página creados correctamente', 'success')
                 return redirect(url_for('restaurant.index'))
-            flash(error)
+            flash(error, 'error')
         else:
             # UPDATE
             page_fetch.name = request.form.get('name')
@@ -61,13 +62,14 @@ def page(restaurant_id):
             elif not page_fetch.followers:
                 error = 'Se requiere la cantidad de seguidores de la página'
             if error is not None:
-                flash(error)
+                flash(error, 'error')
             else:
                 updated_page = Page().update(page_fetch.id, body)
                 if updated_page:
+                    flash('Datos de la página actualizados correctamente', 'success')
                     return redirect(url_for('restaurant.index'))
                 return error
-            flash(error)
+            flash(error, 'error')
     return render_template('restaurant/page.html', page = page_fetch)
 
 @restaurant_bp.route('/<int:restaurant_id>/schedule', methods=['GET', 'POST'])
@@ -97,6 +99,7 @@ def schedule(restaurant_id):
                             }
                             schedule = Schedule(**params)
                             schedule.create()
+            flash('Horario actualizado exitosamente','success')
             return redirect(url_for('restaurant.index'))
     else:
         if request.method == 'POST':
@@ -115,6 +118,7 @@ def schedule(restaurant_id):
                             }
                             schedule = Schedule(**params)
                             schedule.create()
+            flash('Horario creado exitosamente','success')
             return redirect(url_for('restaurant.index'))
     return render_template('restaurant/schedule.html', schedule = schedule, hours = hours)
 
@@ -146,16 +150,17 @@ def create():
             error = 'Se requiere el tipo de restaurante'
 
         if error is not None:
-            flash(error)
+            flash(error, 'error')
         else:
             restaurant_fetch = Restaurant().find_by_params({'name': name})
             if restaurant_fetch is None:
                 restaurant = Restaurant(**params)
                 restaurant.create()
+                flash('Restaurante creado correctamente', 'success')
                 return redirect(url_for('restaurant.index'))
             else:
                 error = f"El restaurante '{restaurant_fetch.name}' ya existe"
-        flash(error)
+        flash(error, 'error')
     return render_template('restaurant/create.html')
 
 @restaurant_bp.route('/<int:restaurant_id>/update', methods=['GET', 'POST'])
@@ -187,16 +192,17 @@ def update(restaurant_id):
                 error = 'Se requiere el tipo de restaurante'
 
             if error is not None:
-                flash(error)
+                flash(error, 'error')
             else:
                 updated_rest = Restaurant().update(restaurant_id, body)
                 if updated_rest:
+                    flash('Restaurante actualizado correctamente', 'success')
                     return redirect(url_for('restaurant.index'))
                 return error
-            flash(error)
+            flash(error, 'error')
         else:
             error = 'El restaurante con ese id no existe'
-        flash(error)
+        flash(error, 'error')
     return render_template('restaurant/update.html', restaurant = restaurant)
 
 @restaurant_bp.route('/<int:restaurant_id>/upload', methods=['GET', 'POST'])
@@ -214,6 +220,7 @@ def upload(restaurant_id):
             os.makedirs(path)
         file_path = os.path.abspath(f'{path}/{file_name}')
         excel_data.save(file_path)
+        flash('Archivo subido correctamente', 'success')
     return render_template('restaurant/upload.html', restaurant = restaurant)
 
 @restaurant_bp.route('/<int:restaurant_id>/destroy', methods=['GET', 'POST'])

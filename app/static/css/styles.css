@@ -74,10 +74,17 @@ body{
 }
 
 /* ---------------- FLASH MESSAGES ---------------- */
-.flash{
+.error{
     display: flex;
     justify-content: center;
     background-color: red;
+    color: white;
+    padding: 10px;
+}
+.success{
+    display: flex;
+    justify-content: center;
+    background-color: green;
     color: white;
     padding: 10px;
 }

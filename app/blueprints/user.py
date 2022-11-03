@@ -47,7 +47,7 @@ def update(user_id):
                 error = 'Se requiere el rol del usuario'
 
             if error is not None:
-                flash(error)
+                flash(error, 'error')
             else:
                 restaurant_fetch = None
                 try:
@@ -57,12 +57,13 @@ def update(user_id):
                 if restaurant_fetch or user.restaurant_id is None:
                     updated_rest = User().update(user_id, body)
                     if updated_rest:
+                        flash('Usuario actualizado correctamente', 'success')
                         return redirect(url_for('user.index'))
                     return error                    
-            flash(error)
+            flash(error, 'error')
         else:
             error = 'El user con ese id no existe'
-        flash(error)
+        flash(error, 'error')
     return render_template('user/update.html', user = user, restaurants = restaurants)
 
 @user_bp.route('/<int:user_id>/destroy', methods=['GET', 'POST'])

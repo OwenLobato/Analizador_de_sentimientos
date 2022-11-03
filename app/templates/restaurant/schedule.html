@@ -37,6 +37,10 @@
                 </tr>
             {% endfor %}
         </table>
-        <input type="submit" value="Listo">
+        {% if schedule %}
+            <input type="submit" value="Actualizar">
+        {% else %}
+            <input type="submit" value="Crear">
+        {% endif %}
     </form>
 {% endblock %}

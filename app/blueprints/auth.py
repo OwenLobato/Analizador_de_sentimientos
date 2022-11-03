@@ -48,12 +48,13 @@ def register():
             if restaurant_fetch or restaurant_id is None:
                 user = User(**params)
                 user.create()
+                flash('Usuario registrado correctamente', 'success')
                 return redirect(url_for('auth.login'))
             else:
                 error = "Restaurante no existente"
         else:
             error = f"El correo '{user_fetch.email}' ya existe"
-        flash(error)
+        flash(error, 'error')
     return render_template('auth/register.html', restaurants = restaurants)
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -74,7 +75,7 @@ def login():
             session.clear()
             session['user_id'] = user.id
             return redirect(url_for('user.index'))
-        flash(error)
+        flash(error, 'error')
     return render_template('auth/login.html')
 
 @auth_bp.route('/logout', methods=['GET', 'POST'])
