@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `analizador`.`schedule` (
   `week_day` 		VARCHAR(9) NOT NULL ,
   `start_hour` 		TIME NOT NULL,
   `finish_hour` 	TIME NOT NULL,
+  `schedule_name` VARCHAR(12) NOT NULL,
   `restaurant_id` 	INT  NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`restaurant_id`)

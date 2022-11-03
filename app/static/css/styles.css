@@ -98,11 +98,40 @@ form label{
 }
 
 form input, textarea, select{
-    font-weight: 300;
-    font-size: 18px;
     margin: 5px 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 10px;
+}
+
+table{
+    font-size:17px;
+    text-align: center;
+    color:#333333;
+    width:100%;
+    border-width: 1px;
+    border-color: #729ea5;
+    border-collapse: collapse;
+}
+
+table th{
+    background-color:#acc8cc;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #729ea5;
+    text-align: center;
+}
+
+table tr{
+    background-color:#ffffff;
+}
+
+table td{
+    font-size:15px;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #729ea5;
 }
 
 form input[type=submit]{

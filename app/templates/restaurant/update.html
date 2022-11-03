@@ -2,7 +2,8 @@
 
 {% block header %}
     <h2>{% block title %}Actualizar restaurante{% endblock %}</h2>
-    <a href="{{ url_for('restaurant.page', restaurant_id=restaurant.id) }}">Actualizar pagina</a>
+    <a href="{{ url_for('restaurant.page', restaurant_id=restaurant.id) }}">Página</a>
+    <a href="{{ url_for('restaurant.schedule', restaurant_id=restaurant.id) }}">Horario</a>
 {% endblock %}
 
 {% block content %}

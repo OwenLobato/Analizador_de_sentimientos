@@ -4,8 +4,10 @@ import os
 from datetime import datetime
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for
 from blueprints.auth import login_required
+from helpers.schedule import week_days, hours
 from models.restaurant_model import Restaurant
 from models.page_model import Page
+from models.schedule_model import Schedule
 
 restaurant_bp = Blueprint('restaurant', __name__, url_prefix='/restaurants')
 
@@ -21,11 +23,10 @@ def index():
 @login_required
 def page(restaurant_id):
     """ Create or update a restaurant page """
-    restaurant = Restaurant().find_by_params({'id': restaurant_id})
-    page_fetch = Page().find_by_params({'restaurant_id': restaurant.id})
+    page_fetch = Page().find_by_params({'restaurant_id': restaurant_id})
     if request.method == 'POST':
         if page_fetch is None:
-            # Crear
+            # CREATE
             name = request.form.get('name')
             followers = request.form.get('followers')
             params = {
@@ -47,7 +48,7 @@ def page(restaurant_id):
                 return redirect(url_for('restaurant.index'))
             flash(error)
         else:
-            #Actualizar
+            # UPDATE
             page_fetch.name = request.form.get('name')
             page_fetch.followers = request.form.get('followers')
             body = {
@@ -67,11 +68,55 @@ def page(restaurant_id):
                     return redirect(url_for('restaurant.index'))
                 return error
             flash(error)
-
-
-
-
     return render_template('restaurant/page.html', page = page_fetch)
+
+@restaurant_bp.route('/<int:restaurant_id>/schedule', methods=['GET', 'POST'])
+@login_required
+def schedule(restaurant_id):
+    """ Create or update a restaurant schedule """
+    schedule_fetch = Schedule().get_all({'restaurant_id': restaurant_id})
+    schedule = []
+    if schedule_fetch:
+        for sche in schedule_fetch:
+            schedule.append(int(sche.schedule_name.split("_")[1]))
+        if request.method == 'POST':
+            # UPDATE (delete and create)
+            for sche in schedule_fetch:
+                Schedule().destroy(sche.id)
+            options = request.form.getlist('schedule')
+            for day in week_days:
+                for s in week_days[day]:
+                    for op in options:
+                        if s == op:
+                            params = {
+                                "week_day": day,
+                                "start_hour": week_days[day][s][0],
+                                "finish_hour": week_days[day][s][1],
+                                "schedule_name": s,
+                                "restaurant_id": restaurant_id
+                            }
+                            schedule = Schedule(**params)
+                            schedule.create()
+            return redirect(url_for('restaurant.index'))
+    else:
+        if request.method == 'POST':
+            # CREATE
+            options = request.form.getlist('schedule')
+            for day in week_days:
+                for s in week_days[day]:
+                    for op in options:
+                        if s == op:
+                            params = {
+                                "week_day": day,
+                                "start_hour": week_days[day][s][0],
+                                "finish_hour": week_days[day][s][1],
+                                "schedule_name": s,
+                                "restaurant_id": restaurant_id
+                            }
+                            schedule = Schedule(**params)
+                            schedule.create()
+            return redirect(url_for('restaurant.index'))
+    return render_template('restaurant/schedule.html', schedule = schedule, hours = hours)
 
 @restaurant_bp.route('/create', methods=['GET', 'POST'])
 @login_required

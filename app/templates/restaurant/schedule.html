@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title %}Horarios{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <table>
+            <tr>
+                <th>Horas</th><th>Lunes</th><th>Martes</th><th>Miercoles</th><th>Jueves</th><th>Viernes</th><th>Sabado</th><th>Domingo</th>
+            </tr>
+            {% for day in range(1,25,1) %}
+                <tr>
+                    <td>{{ hours[day-1] }}</td>
+                    {% for x in range(day,169,24) %}
+                        {% if x < 10 %}
+                            {% if x in schedule %}
+                                <td><input type="checkbox" id="schedule_00{{ x }}" name="schedule" value="schedule_00{{ x }}" checked></td>
+                            {% else %}
+                                <td><input type="checkbox" id="schedule_00{{ x }}" name="schedule" value="schedule_00{{ x }}"></td>
+                            {% endif %}
+                        {% elif x < 100 %}
+                            {% if x in schedule %}
+                                <td><input type="checkbox" id="schedule_0{{ x }}" name="schedule" value="schedule_0{{ x }}" checked></td>
+                            {% else %}
+                                <td><input type="checkbox" id="schedule_0{{ x }}" name="schedule" value="schedule_0{{ x }}"></td>
+                            {% endif %}
+                        {% else %}
+                            {% if x in schedule %}
+                                <td><input type="checkbox" id="schedule_{{ x }}" name="schedule" value="schedule_{{ x }}" checked></td>
+                            {% else %}
+                                <td><input type="checkbox" id="schedule_{{ x }}" name="schedule" value="schedule_{{ x }}"></td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Listo">
+    </form>
+{% endblock %}

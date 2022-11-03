@@ -9,6 +9,7 @@ class Schedule(db.Model):
     week_day = db.Column(db.String(9), nullable=False)
     start_hour = db.Column(db.Time, nullable=False)
     finish_hour = db.Column(db.Time, nullable=False)
+    schedule_name = db.Column(db.String(12), nullable=False)
     restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"), nullable=False)
 
     fields = [
@@ -16,6 +17,7 @@ class Schedule(db.Model):
         "week_day",
         "start_hour",
         "finish_hour",
+        "schedule_name",
         "restaurant_id"
     ]
 
