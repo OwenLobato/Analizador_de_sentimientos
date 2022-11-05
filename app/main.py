@@ -6,6 +6,7 @@ from config import Config
 from blueprints.auth import auth_bp
 from blueprints.restaurant import restaurant_bp
 from blueprints.user import user_bp
+from blueprints.feeling import feeling_bp
 
 app = Flask(__name__)
 app.config.from_object(Config())
@@ -14,6 +15,7 @@ app.config.from_object(Config())
 app.register_blueprint(auth_bp)
 app.register_blueprint(restaurant_bp)
 app.register_blueprint(user_bp)
+app.register_blueprint(feeling_bp)
 
 db.init_app(app)
 
