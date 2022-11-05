@@ -1,6 +1,6 @@
 """ Main flask module"""
 
-from flask import Flask
+from flask import Flask, url_for, redirect
 from db import db
 from config import Config
 from blueprints.auth import auth_bp
@@ -17,25 +17,10 @@ app.register_blueprint(user_bp)
 
 db.init_app(app)
 
-@app.route('/routes')
+@app.route('/')
 def index():
-    """ App routes """
-    routes = {
-        "/auth": [
-            "/register - [GET, POST] - register()",
-            "/login - [GET, POST] - login()",
-            "/logout - [GET, POST] - logout()"
-            "/users/<int:user_id>/update - [GET, POST] - update()",
-            "/users/<int:user_id>/destroy - [GET, POST] - destroy()",
-        ],
-        "/restaurants": [
-            "/ - [GET] - index()",
-            "/create - [GET, POST] - create()",
-            "/<int:restaurant_id>/update - [GET, POST] - update()"
-            "/<int:restaurant_id>/destroy - [GET, POST] - destroy()"
-        ]
-    }
-    return routes
+    """ Main to login """
+    return redirect(url_for('auth.login'))
 
 if __name__ == '__main__':
     app.secret_key = 'secret'
