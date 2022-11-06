@@ -105,18 +105,6 @@ CREATE TABLE IF NOT EXISTS `analizador`.`post` (
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `analizador`.`profile`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `analizador`.`profile`;
-
-CREATE TABLE IF NOT EXISTS `analizador`.`profile` (
-  `id` 		INT NOT NULL AUTO_INCREMENT,
-  `name` 	VARCHAR(60) NOT NULL,
-  `gender` 	VARCHAR(1) NOT NULL ,
-  PRIMARY KEY (`id`)
-)ENGINE = InnoDB;
-
--- -----------------------------------------------------
 -- Table `analizador`.`comment`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `analizador`.`comment`;
@@ -124,7 +112,7 @@ DROP TABLE IF EXISTS `analizador`.`comment`;
 CREATE TABLE IF NOT EXISTS `analizador`.`comment` (
   `id` 			 INT		  NOT NULL AUTO_INCREMENT,
   `post_id` 	 INT		  NOT NULL,
-  `profile_id` 	 INT		  NOT NULL,
+  `gender` 	 VARCHAR(1)		  NOT NULL,
   `created_time` TIME 		  NOT NULL,
   `created_date` DATE		  NOT NULL,
   `message`		 TEXT		  NOT NULL,
@@ -133,9 +121,6 @@ CREATE TABLE IF NOT EXISTS `analizador`.`comment` (
   FOREIGN KEY (`post_id`) 
   REFERENCES `analizador`.`post`(`id`)
   ON DELETE NO ACTION ON UPDATE NO ACTION,
-  FOREIGN KEY (`profile_id`)
-  REFERENCES `analizador`.`profile`(`id`)
-  ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------

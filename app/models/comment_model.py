@@ -7,7 +7,7 @@ class Comment(db.Model):
     __tablename__ = 'comment'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
-    profile_id = db.Column(db.Integer, db.ForeignKey("profile.id"), nullable=False)
+    gender = db.Column(db.String(1), nullable=False)
     created_time = db.Column(db.Time, nullable=False)
     created_date = db.Column(db.Date, nullable=False)
     message = db.Column(db.Text, nullable=False)
@@ -16,7 +16,7 @@ class Comment(db.Model):
     fields = [
         "id",
         "post_id",
-        "profile_id",
+        "gender",
         "created_time",
         "created_date",
         "message"
