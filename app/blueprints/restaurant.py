@@ -210,10 +210,14 @@ def update(restaurant_id):
 def upload(restaurant_id):
     """ Upload data to a restaurant """
     restaurant = Restaurant().find_by_params({'id': restaurant_id})
+    
+    uploads = [f for f in os.listdir('static/uploads') if os.path.isfile(os.path.join('static/uploads', f))]
+    excel_files = [excel_name for excel_name in uploads if int(excel_name[0]) == restaurant_id]
+
     if request.method == 'POST':
         excel_data = request.files['data']
         now = datetime.now()
-        name = f"{str(restaurant.id)}_{now.year}{now.month}{now.day}_{now.hour}{now.minute}{now.second}_{excel_data.filename.replace(' ','_')}"
+        name = f"{str(restaurant.id)}_{now.year}{now.month}{now.day}_{now.hour}{now.minute}{now.second}___{excel_data.filename.replace(' ','_')}"
         file_name = secure_filename(name)
         path = 'static/uploads'
         if not os.path.exists(path):
@@ -221,7 +225,16 @@ def upload(restaurant_id):
         file_path = os.path.abspath(f'{path}/{file_name}')
         excel_data.save(file_path)
         flash('Archivo subido correctamente', 'success')
-    return render_template('restaurant/upload.html', restaurant = restaurant)
+        return redirect(url_for('restaurant.upload', restaurant_id = restaurant_id))
+    return render_template('restaurant/upload.html', restaurant = restaurant, excel_files = excel_files)
+
+@restaurant_bp.route('/<int:restaurant_id>/upload/delete/<excel>')
+@login_required
+def delete_excel(restaurant_id, excel):
+    path = os.path.join('static/uploads', excel)
+    os.remove(path)
+    flash('Archivo borrado correctamente', 'success')
+    return redirect(url_for('restaurant.upload', restaurant_id = restaurant_id))
 
 @restaurant_bp.route('/<int:restaurant_id>/destroy', methods=['GET', 'POST'])
 @login_required

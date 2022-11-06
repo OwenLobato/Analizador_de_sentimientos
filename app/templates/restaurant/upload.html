@@ -13,4 +13,23 @@
         <input type="submit" value="Cargar">
 
     </form>
+
+    {% if not excel_files %}
+        <h2 class="text-center text-danger pt-5 ">No existen archivos cargados a este restaurante</h2>
+    {% else %}
+        <h2 class="text-primary pt-5 mb-3">Datos cargados previamente:</h2>
+        {% for excel in excel_files %}
+            <article>
+                <header>
+                    <div>
+                        <h4>{{ excel.split("___")[1] }}</h4>
+                    </div>
+                    <div>
+                        <a href="{{ url_for('restaurant.delete_excel', restaurant_id=restaurant.id, excel=excel) }}">Eliminar</a>
+                    </div>
+                </header>
+            </article>
+        {% endfor %}
+    {% endif %}
+
 {% endblock %}
