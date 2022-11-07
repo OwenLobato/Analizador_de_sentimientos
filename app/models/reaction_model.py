@@ -6,7 +6,7 @@ class Reaction(db.Model):
     """ Reaction model class """
     __tablename__ = 'reaction'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
+    post_id = db.Column(db.String(16), db.ForeignKey("post.id"), nullable=False)
     angry = db.Column(db.Integer, nullable=False, default=0)
     haha = db.Column(db.Integer, nullable=False, default=0)
     like = db.Column(db.Integer, nullable=False, default=0)

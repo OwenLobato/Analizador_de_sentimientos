@@ -5,7 +5,7 @@ from db import db
 class Post(db.Model):
     """ Post model class """
     __tablename__ = 'post'
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.String(16), primary_key=True, nullable=False)
     page_id = db.Column(db.Integer, db.ForeignKey("page.id"), nullable=False)
     created_time = db.Column(db.Time, nullable=False)
     created_date = db.Column(db.Date, nullable=False)
