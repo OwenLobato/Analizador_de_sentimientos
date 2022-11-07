@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `analizador`.`page` (
 DROP TABLE IF EXISTS `analizador`.`post`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`post` (
-    `id` 		     VARCHAR(16) NOT NULL AUTO_INCREMENT,
+    `id` 		     VARCHAR(16) NOT NULL,
     `page_id` 	     INT 		 NOT NULL,
     `created_time`   TIME 		 NOT NULL,
     `created_date`   DATE 		 NOT NULL,
@@ -129,7 +129,7 @@ DROP TABLE IF EXISTS `analizador`.`reaction` ;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`reaction` (
     `id`      INT         NOT NULL AUTO_INCREMENT,
-    `post_id` VARCHAR(16) NOT NULL DEFAULT(0),
+    `post_id` VARCHAR(16) NOT NULL,
     `angry`	  INT         NOT NULL DEFAULT(0),
     `haha`	  INT         NOT NULL DEFAULT(0),
     `like` 	  INT         NOT NULL DEFAULT(0),
