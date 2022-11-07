@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `analizador`.`comment` (
     PRIMARY KEY (`id`),
     FOREIGN KEY (`post_id`) 
     REFERENCES `analizador`.`post`(`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
