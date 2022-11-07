@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema analizador
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `analizador`;
-CREATE SCHEMA IF NOT EXISTS `analizador` DEFAULT CHARACTER SET utf8;
+CREATE SCHEMA IF NOT EXISTS `analizador` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `analizador`;
 
 -- -----------------------------------------------------
@@ -111,11 +111,12 @@ DROP TABLE IF EXISTS `analizador`.`comment`;
 CREATE TABLE IF NOT EXISTS `analizador`.`comment` (
     `id` 		   INT		   NOT NULL AUTO_INCREMENT,
     `post_id` 	   VARCHAR(16) NOT NULL,
+    `from_name`    VARCHAR(50) NOT NULL,
     `gender` 	   VARCHAR(1)  NOT NULL,
     `created_time` TIME 	   NOT NULL,
     `created_date` DATE		   NOT NULL,
     `message`	   TEXT		   NOT NULL,
-    `reaction`	   INT 		   NOT NULL DEFAULT(0),
+    `reactions`	   INT 		   NOT NULL DEFAULT(0),
     PRIMARY KEY (`id`),
     FOREIGN KEY (`post_id`) 
     REFERENCES `analizador`.`post`(`id`)
@@ -142,6 +143,23 @@ CREATE TABLE IF NOT EXISTS `analizador`.`reaction` (
     REFERENCES `analizador`.`post` (`id`)
     ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
+
+INSERT INTO user (email, password, name, role)
+VALUES ('owen@gmail.com','pbkdf2:sha256:260000$cEQ0e7mMNwmCHjaB$b44946b91030a524234d09fe0533179c2a47fd36ca194e9c171451a6052c8d33','Owen Lobato','Admin');
+
+INSERT INTO restaurant (name, address, region, kind)
+VALUES ('Cuaxiote','Las palmas #34 Centro','Colima','Comida mexicana');
+INSERT INTO restaurant (name, address, region, kind)
+VALUES ('Las brasas','Madero #486 colibri','Villa de Alvarez','Carnes asadas');
+INSERT INTO restaurant (name, address, region, kind)
+VALUES ('Don comalon','La pasadita #414 portales','Comala','Botanero');
+INSERT INTO restaurant (name, address, region, kind)
+VALUES ('El asador de chanfaino','Piedras calientes #846 Parotales','Colima','Carnes asadas');
+
+INSERT INTO page (restaurant_id, name, followers)
+VALUES (1,'Cuaxiote', 1580);
+INSERT INTO page (restaurant_id, name, followers)
+VALUES (2,'Las brasas', 4186);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
