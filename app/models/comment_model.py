@@ -7,6 +7,7 @@ class Comment(db.Model):
     __tablename__ = 'comment'
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     post_id = db.Column(db.String(16), db.ForeignKey("post.id"), nullable=False)
+    from_name = db.Column(db.String(50), nullable=False)
     gender = db.Column(db.String(1), nullable=False)
     created_time = db.Column(db.Time, nullable=False)
     created_date = db.Column(db.Date, nullable=False)
@@ -16,6 +17,7 @@ class Comment(db.Model):
     fields = [
         "id",
         "post_id",
+        "from_name",
         "gender",
         "created_time",
         "created_date",
@@ -54,11 +56,12 @@ class Comment(db.Model):
             return self.find_by_params({'id': id})
         return None
 
-    def destroy(self, comment_id):
-        """Destroy an comment in  DB"""
-        comment = self.find_by_params({"id": comment_id})
-        if comment:
-            db.session.delete(comment)
-            db.session.commit()
+    def destroy(self, post_id):
+        """Destroy a comment in DB"""
+        comments = self.get_all({"post_id": post_id})
+        if comments:
+            for comment in comments:
+                db.session.delete(comment)
+                db.session.commit()
             return True
         return False

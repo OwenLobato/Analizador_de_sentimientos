@@ -58,11 +58,12 @@ class Reaction(db.Model):
             return self.find_by_params({'id': id})
         return None
 
-    def destroy(self, reaction_id):
-        """Destroy an reaction in  DB"""
-        reaction = self.find_by_params({"id": reaction_id})
-        if reaction:
-            db.session.delete(reaction)
-            db.session.commit()
+    def destroy(self, post_id):
+        """Destroy an reaction by post id in DB"""
+        reactions = self.get_all({"post_id": post_id})
+        if reactions:
+            for reaction in reactions:
+                db.session.delete(reaction)
+                db.session.commit()
             return True
         return False

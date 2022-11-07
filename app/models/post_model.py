@@ -10,7 +10,7 @@ class Post(db.Model):
     created_time = db.Column(db.Time, nullable=False)
     created_date = db.Column(db.Date, nullable=False)
     message = db.Column(db.Text, nullable=False)
-    clasification = db.Column(db.String(30), nullable=False)
+    classification = db.Column(db.String(30), nullable=False)
     xformat = db.Column(db.String(30), nullable=False)
     share = db.Column(db.Integer, nullable=False, default=0)
 
@@ -20,7 +20,7 @@ class Post(db.Model):
         "created_time",
         "created_date",
         "message",
-        "clasification",
+        "classification",
         "xformat",
         "share"
     ]
@@ -56,11 +56,12 @@ class Post(db.Model):
             return self.find_by_params({'id': id})
         return None
 
-    def destroy(self, post_id):
-        """Destroy an post in  DB"""
-        post = self.find_by_params({"id": post_id})
-        if post:
-            db.session.delete(post)
-            db.session.commit()
+    def destroy(self, page_id):
+        """Destroy all post from a restaurant in DB"""
+        posts = self.get_all({"page_id": page_id})
+        if posts:
+            for post in posts:
+                db.session.delete(post)
+                db.session.commit()
             return True
         return False

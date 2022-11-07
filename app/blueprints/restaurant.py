@@ -8,6 +8,7 @@ from helpers.schedule import week_days, hours
 from models.restaurant_model import Restaurant
 from models.page_model import Page
 from models.schedule_model import Schedule
+from helpers.excel_helper import ExcelHelper
 
 restaurant_bp = Blueprint('restaurant', __name__, url_prefix='/restaurants')
 
@@ -210,28 +211,37 @@ def update(restaurant_id):
 def upload(restaurant_id):
     """ Upload data to a restaurant """
     restaurant = Restaurant().find_by_params({'id': restaurant_id})
-    
+
     uploads = [f for f in os.listdir('static/uploads') if os.path.isfile(os.path.join('static/uploads', f))]
     excel_files = [excel_name for excel_name in uploads if int(excel_name[0]) == restaurant_id]
 
     if request.method == 'POST':
         excel_data = request.files['data']
         now = datetime.now()
-        name = f"{str(restaurant.id)}_{now.year}{now.month}{now.day}_{now.hour}{now.minute}{now.second}___{excel_data.filename.replace(' ','_')}"
+        n_date = now.year + now.month + now.day
+        n_hour = now.hour + now.minute + now.second
+        name = f"{str(restaurant.id)}_{n_date}_{n_hour}___{excel_data.filename.replace(' ','_')}"
         file_name = secure_filename(name)
         path = 'static/uploads'
         if not os.path.exists(path):
             os.makedirs(path)
         file_path = os.path.abspath(f'{path}/{file_name}')
         excel_data.save(file_path)
-        flash('Archivo subido correctamente', 'success')
+        excel_db = ExcelHelper(file_path).save_excel_data(restaurant_id)
+        if excel_db:
+            flash('Archivo subido correctamente', 'success')
+        else:
+            ExcelHelper(file_path).delete_excel_data(restaurant_id)
+            flash('Elimine el archivo, corríjalo y vuelva a intentarlo', 'error')
         return redirect(url_for('restaurant.upload', restaurant_id = restaurant_id))
-    return render_template('restaurant/upload.html', restaurant = restaurant, excel_files = excel_files)
+    return render_template('restaurant/upload.html', restaurant=restaurant, excel_files=excel_files)
 
 @restaurant_bp.route('/<int:restaurant_id>/upload/delete/<excel>')
 @login_required
 def delete_excel(restaurant_id, excel):
+    """ Delete excel data and file """
     path = os.path.join('static/uploads', excel)
+    ExcelHelper(path).delete_excel_data(restaurant_id)
     os.remove(path)
     flash('Archivo borrado correctamente', 'success')
     return redirect(url_for('restaurant.upload', restaurant_id = restaurant_id))
