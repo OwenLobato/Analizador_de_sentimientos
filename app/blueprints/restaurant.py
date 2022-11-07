@@ -216,6 +216,11 @@ def upload(restaurant_id):
     excel_files = [excel_name for excel_name in uploads if int(excel_name[0]) == restaurant_id]
 
     if request.method == 'POST':
+        page_fetch = Page().find_by_params({'restaurant_id': restaurant_id})
+        if not page_fetch:
+            flash('Favor de previamente registrar una pagina','error')
+            return redirect(url_for('restaurant.upload', restaurant_id = restaurant_id))
+
         excel_data = request.files['data']
         now = datetime.now()
         n_date = now.year + now.month + now.day
