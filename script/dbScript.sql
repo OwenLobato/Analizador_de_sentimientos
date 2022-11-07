@@ -23,12 +23,12 @@ USE `analizador`;
 DROP TABLE IF EXISTS `analizador`.`restaurant`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`restaurant` (
-  `id`     INT         NOT NULL AUTO_INCREMENT,
-  `name`   VARCHAR(45) NOT NULL,
-  `address` VARCHAR(80) NOT NULL,
-  `region` VARCHAR(45) NOT NULL,
-  `kind`   VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`)
+    `id`      INT         NOT NULL AUTO_INCREMENT,
+    `name`    VARCHAR(45) NOT NULL,
+    `address` VARCHAR(80) NOT NULL,
+    `region`  VARCHAR(45) NOT NULL,
+    `kind`    VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id`)
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -37,16 +37,16 @@ CREATE TABLE IF NOT EXISTS `analizador`.`restaurant` (
 DROP TABLE IF EXISTS `analizador`.`schedule`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`schedule` (
-  `id` 				INT  NOT NULL AUTO_INCREMENT,
-  `week_day` 		VARCHAR(9) NOT NULL ,
-  `start_hour` 		TIME NOT NULL,
-  `finish_hour` 	TIME NOT NULL,
-  `schedule_name` VARCHAR(12) NOT NULL,
-  `restaurant_id` 	INT  NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`restaurant_id`)
-  REFERENCES `analizador`.`restaurant`(`id`)
-  ON DELETE NO ACTION ON UPDATE NO ACTION
+    `id` 			INT         NOT NULL AUTO_INCREMENT,
+    `week_day` 		VARCHAR(9)  NOT NULL,
+    `start_hour` 	TIME        NOT NULL,
+    `finish_hour` 	TIME        NOT NULL,
+    `schedule_name` VARCHAR(12) NOT NULL,
+    `restaurant_id` INT         NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`restaurant_id`)
+    REFERENCES `analizador`.`restaurant`(`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -55,16 +55,16 @@ CREATE TABLE IF NOT EXISTS `analizador`.`schedule` (
 DROP TABLE IF EXISTS `analizador`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`user` (
-  `id` 			  INT 		  NOT NULL AUTO_INCREMENT,
-  `email` 		  VARCHAR(50) NOT NULL,
-  `password`	  VARCHAR(255) NOT NULL,
-  `name`	 	  VARCHAR(45) NOT NULL,
-  `role` 		  VARCHAR(30) NOT NULL,
-  `restaurant_id` INT 		  NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`restaurant_id`)
-  REFERENCES `analizador`.`restaurant`(`id`)
-  ON DELETE NO ACTION ON UPDATE NO ACTION)
+    `id` 			INT 		 NOT NULL AUTO_INCREMENT,
+    `email` 		VARCHAR(50)  NOT NULL,
+    `password`	    VARCHAR(255) NOT NULL,
+    `name`	 	    VARCHAR(45)  NOT NULL,
+    `role` 		    VARCHAR(30)  NOT NULL,
+    `restaurant_id` INT 		 NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`restaurant_id`)
+    REFERENCES `analizador`.`restaurant`(`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -73,14 +73,14 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `analizador`.`page`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`page` (
-  `id` 			  INT 		  NOT NULL AUTO_INCREMENT,
-  `restaurant_id` INT 		  NOT NULL,
-  `name` 		  VARCHAR(45) NOT NULL,
-  `followers` 	  INT 		  NOT NULL DEFAULT(0),
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`restaurant_id`)
-  REFERENCES `analizador`.`restaurant`(`id`)
-  ON DELETE NO ACTION ON UPDATE NO ACTION
+    `id` 			INT 		NOT NULL AUTO_INCREMENT,
+    `restaurant_id` INT 		NOT NULL,
+    `name` 		    VARCHAR(45) NOT NULL,
+    `followers` 	INT 		NOT NULL DEFAULT(0),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`restaurant_id`)
+    REFERENCES `analizador`.`restaurant`(`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -89,18 +89,18 @@ CREATE TABLE IF NOT EXISTS `analizador`.`page` (
 DROP TABLE IF EXISTS `analizador`.`post`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`post` (
-  `id` 			   VARCHAR(16) NOT NULL,
-  `page_id` 	   INT 			NOT NULL,
-  `created_time`   TIME 		NOT NULL,
-  `created_date`   DATE 		NOT NULL,
-  `message` 	   TEXT			NOT NULL,
-  `classification` VARCHAR(30)  NOT NULL,
-  `xformat`		   VARCHAR(30)  NOT NULL,
-  `share` 		   INT 		    NOT NULL DEFAULT(0),
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`page_id`)
-  REFERENCES `analizador`.`page`(`id`)
-  ON DELETE NO ACTION ON UPDATE NO ACTION
+    `id` 		     VARCHAR(16) NOT NULL AUTO_INCREMENT,
+    `page_id` 	     INT 		 NOT NULL,
+    `created_time`   TIME 		 NOT NULL,
+    `created_date`   DATE 		 NOT NULL,
+    `message` 	     TEXT		 NOT NULL,
+    `classification` VARCHAR(30) NOT NULL,
+    `xformat`		 VARCHAR(30) NOT NULL,
+    `share` 		 INT 		 NOT NULL DEFAULT(0),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`page_id`)
+    REFERENCES `analizador`.`page`(`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -109,17 +109,17 @@ CREATE TABLE IF NOT EXISTS `analizador`.`post` (
 DROP TABLE IF EXISTS `analizador`.`comment`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`comment` (
-  `id` 			 INT		  NOT NULL AUTO_INCREMENT,
-  `post_id` 	 VARCHAR(16)		  NOT NULL,
-  `gender` 	 VARCHAR(1)		  NOT NULL,
-  `created_time` TIME 		  NOT NULL,
-  `created_date` DATE		  NOT NULL,
-  `message`		 TEXT		  NOT NULL,
-  `reaction`	 INT 		  NOT NULL DEFAULT(0),
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`post_id`) 
-  REFERENCES `analizador`.`post`(`id`)
-  ON DELETE NO ACTION ON UPDATE NO ACTION
+    `id` 		   INT		   NOT NULL AUTO_INCREMENT,
+    `post_id` 	   VARCHAR(16) NOT NULL,
+    `gender` 	   VARCHAR(1)  NOT NULL,
+    `created_time` TIME 	   NOT NULL,
+    `created_date` DATE		   NOT NULL,
+    `message`	   TEXT		   NOT NULL,
+    `reaction`	   INT 		   NOT NULL DEFAULT(0),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`post_id`) 
+    REFERENCES `analizador`.`post`(`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -128,21 +128,20 @@ CREATE TABLE IF NOT EXISTS `analizador`.`comment` (
 DROP TABLE IF EXISTS `analizador`.`reaction` ;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`reaction` (
-  `id`		INT NOT NULL AUTO_INCREMENT,
-  `post_id` VARCHAR(16) NOT NULL,
-  `angry`	INT NOT NULL DEFAULT(0),
-  `haha`	INT NOT NULL DEFAULT(0),
-  `like` 	INT NOT NULL DEFAULT(0),
-  `love` 	INT NOT NULL DEFAULT(0),
-  `sad` 	INT NOT NULL DEFAULT(0),
-  `wow` 	INT NOT NULL DEFAULT(0),
-  `care` 	INT NOT NULL DEFAULT(0),
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`post_id`)
-  REFERENCES `analizador`.`post` (`id`)
-  ON DELETE NO ACTION ON UPDATE NO ACTION
+    `id`      INT         NOT NULL AUTO_INCREMENT,
+    `post_id` VARCHAR(16) NOT NULL DEFAULT(0),
+    `angry`	  INT         NOT NULL DEFAULT(0),
+    `haha`	  INT         NOT NULL DEFAULT(0),
+    `like` 	  INT         NOT NULL DEFAULT(0),
+    `love` 	  INT         NOT NULL DEFAULT(0),
+    `sad` 	  INT         NOT NULL DEFAULT(0),
+    `wow` 	  INT         NOT NULL DEFAULT(0),
+    `care` 	  INT         NOT NULL DEFAULT(0),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`post_id`)
+    REFERENCES `analizador`.`post` (`id`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
