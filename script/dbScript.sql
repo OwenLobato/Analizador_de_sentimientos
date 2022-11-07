@@ -3,7 +3,6 @@
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
 -- Owen Lobato Velazquez - 17460013
--- Santiago De La Luz Ascencio - 17460254
 
 -- Resetear contador: ALTER TABLE bd.table AUTO_INCREMENT=1;
 
@@ -90,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `analizador`.`page` (
 DROP TABLE IF EXISTS `analizador`.`post`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`post` (
-  `id` 			   INT 			NOT NULL AUTO_INCREMENT,
+  `id` 			   VARCHAR(16) NOT NULL,
   `page_id` 	   INT 			NOT NULL,
   `created_time`   TIME 		NOT NULL,
   `created_date`   DATE 		NOT NULL,
@@ -111,7 +110,7 @@ DROP TABLE IF EXISTS `analizador`.`comment`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`comment` (
   `id` 			 INT		  NOT NULL AUTO_INCREMENT,
-  `post_id` 	 INT		  NOT NULL,
+  `post_id` 	 VARCHAR(16)		  NOT NULL,
   `gender` 	 VARCHAR(1)		  NOT NULL,
   `created_time` TIME 		  NOT NULL,
   `created_date` DATE		  NOT NULL,
@@ -120,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `analizador`.`comment` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`post_id`) 
   REFERENCES `analizador`.`post`(`id`)
-  ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -130,7 +129,7 @@ DROP TABLE IF EXISTS `analizador`.`reaction` ;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`reaction` (
   `id`		INT NOT NULL AUTO_INCREMENT,
-  `post_id` INT NOT NULL DEFAULT(0),
+  `post_id` VARCHAR(16) NOT NULL,
   `angry`	INT NOT NULL DEFAULT(0),
   `haha`	INT NOT NULL DEFAULT(0),
   `like` 	INT NOT NULL DEFAULT(0),
