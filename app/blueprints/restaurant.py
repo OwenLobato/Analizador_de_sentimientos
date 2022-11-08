@@ -223,8 +223,8 @@ def upload(restaurant_id):
 
         excel_data = request.files['data']
         now = datetime.now()
-        n_date = now.year + now.month + now.day
-        n_hour = now.hour + now.minute + now.second
+        n_date = f"{now.year}{now.month}{now.day}"
+        n_hour = f"{now.hour}{now.minute}{now.second}"
         name = f"{str(restaurant.id)}_{n_date}_{n_hour}___{excel_data.filename.replace(' ','_')}"
         file_name = secure_filename(name)
         path = 'static/uploads'
