@@ -1,6 +1,8 @@
 """ POST model module """
 
 from db import db
+from sqlalchemy import asc
+
 
 class Post(db.Model):
     """ Post model class """
@@ -31,9 +33,11 @@ class Post(db.Model):
             if param not in self.fields:
                 print("**************** ERROR POST PARAMS **************")
 
-    def get_all(self, params=None):
+    def get_all(self, params=None, order=False):
         """ Get all posts """
         self.__validate_params(params)
+        if order:
+            return self.query.filter_by(**params).order_by(asc(Post.created_date)).all()
         return self.query.filter_by(**params).all()
 
     def create(self):

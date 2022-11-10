@@ -33,6 +33,19 @@ class Reaction(db.Model):
             if param not in self.fields:
                 print("**************** ERROR REACTION PARAMS **************")
 
+    def get_total_reactions(self, post_id):
+        """ Get a total reactions by post_id """
+        reaction_fetch = self.find_by_params({"post_id": post_id})
+        angry = reaction_fetch.angry
+        haha = reaction_fetch.haha
+        like = reaction_fetch.like
+        love = reaction_fetch.love
+        sad = reaction_fetch.sad
+        wow = reaction_fetch.wow
+        care = reaction_fetch.care
+        total_reactions = angry + haha + like + love + sad + wow + care
+        return total_reactions
+
     def get_all(self, params=None):
         """ Get all reactions """
         self.__validate_params(params)
