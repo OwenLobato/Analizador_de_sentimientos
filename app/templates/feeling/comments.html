@@ -21,46 +21,44 @@
             <thead>
                 <tr>
                     <th>Post</th>
-                    <th>Reacciones</th>
                     <th>Total de reacciones</th>
                     <th>Sentimiento de la publicacion</th>
                     <th>Comentarios</th>
+                    <th>Sentimiento</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        {% for post in posts_fetch %}
-                            {{ posts_fetch.index(post)+1 }} -> {{ post.id }} <br>
-                        {% endfor %}    
-                    </td>
-                    <td>
-                        {% for reaction in all_reactions %}
-                            {{ all_reactions.index(reaction)+1 }} -> {{ reaction.post_id }} <br>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for total in all_total %}
-                            {{ total }} <br>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for post_reaction in all_post_react %}
-                            {{ post_reaction }} <br>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for post_id in all_comments %}
-                            {% if all_comments.get(post_id) %}
-                                <b>{{ post_id }}</b> -> 
-                                {% for comment in all_comments[post_id] %}
-                                    {{ comment }} <br>
+                {% for index in range(posts_fetch|length)%}
+                    <tr>
+                        <td>
+                            {{ posts_fetch[index].created_date }}   {{ posts_fetch[index].created_time }}
+                        </td>
+                        <td>
+                            {{ all_total[index] }}
+                        </td>
+                        <td>
+                            {{ all_post_react[index] }}
+                        </td>
+                        <td>
+                            {% if all_comments[posts_fetch[index].id] %}
+                                {% for comment in all_comments[posts_fetch[index].id] %}
+                                    {{ comment.message }} <br><br>
                                 {% endfor %}
-                                <br>
+                            {% else %}
+                                Sin comentarios
                             {% endif %}
-                        {% endfor %}
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            {% if all_sentiments[posts_fetch[index].id] %}
+                                {% for comment in all_sentiments[posts_fetch[index].id] %}
+                                    {{ comment }} <br><br>
+                                {% endfor %}
+                            {% else %}
+                                Sin comentarios
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
 

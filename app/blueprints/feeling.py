@@ -46,15 +46,14 @@ def comments(page_id):
     """ Post comments sentiment analysis """
     posts_fetch = Post().get_all({'page_id': page_id}, True)
 
-    all_reactions = []
     all_total = []
     all_comments = {}
     all_post_react = []
+    all_sentiments = {}
 
 
     for post in posts_fetch:
         reactions_fetch = Reaction().find_by_params({'post_id': post.id})
-        all_reactions.append(reactions_fetch)
 
         total_reactions = Reaction().get_total_reactions(post.id)
         all_total.append(total_reactions)
@@ -73,35 +72,46 @@ def comments(page_id):
             val_max = max(reactions, key = reactions.get)
 
             if val_max == 'angry':
-                post_sent = 'Esta publicacion es disgustante'
+                post_sent = 'Disgustante'
             if val_max == 'haha':
-                post_sent = 'Esta publicacion es divertida'
+                post_sent = 'Divertida'
             if val_max == 'like':
-                post_sent = 'Esta publicacion es llamativa'
+                post_sent = 'Llamativa'
             if val_max == 'love':
-                post_sent = 'Esta publicacion es encantadora'
+                post_sent = 'Encantadora'
             if val_max == 'sad':
-                post_sent = 'Esta publicacion es triste'
+                post_sent = 'Triste'
             if val_max == 'wow':
-                post_sent = 'Esta publicacion es impresionante'
+                post_sent = 'Impresionante'
             if val_max == 'care':
-                post_sent = 'Esta publicacion es relevante'
+                post_sent = 'Relevante'
         else:
-            post_sent = 'Publicacion sin reacciones'
+            post_sent = 'Aburrida'
         all_post_react.append(post_sent)
-        print(post_sent)
 
 
         comments_fetch = Comment().get_all({'post_id': post.id})
         all_comments[post.id] = comments_fetch
+
+        for key, value in all_comments.items():
+            msjs = []
+            if value:
+                for comment in value:
+                    if len(comment.message)>5: #Condicional para sentimiento
+                        msjs.append("Positivo")
+                    else:
+                        msjs.append("Negativo")
+            else:
+                msjs.append("Sin sentimientos")
+            all_sentiments[key] = msjs
 
 
     return render_template(
         'feeling/comments.html',
         page_id = page_id,
         posts_fetch = posts_fetch,
-        all_reactions = all_reactions,
         all_post_react = all_post_react,
         all_total = all_total,
         all_comments = all_comments,
+        all_sentiments = all_sentiments
     )
