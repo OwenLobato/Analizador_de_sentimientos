@@ -1,5 +1,7 @@
 """ FEELING Module """
 import os
+from textblob import TextBlob
+from googletrans import Translator
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for
 from blueprints.auth import login_required
 from models.page_model import Page
@@ -51,7 +53,7 @@ def comments(page_id):
     all_post_react = []
     all_sentiments = {}
 
-
+    i = 1
     for post in posts_fetch:
         reactions_fetch = Reaction().find_by_params({'post_id': post.id})
 
@@ -93,17 +95,17 @@ def comments(page_id):
         comments_fetch = Comment().get_all({'post_id': post.id})
         all_comments[post.id] = comments_fetch
 
-        for key, value in all_comments.items():
-            msjs = []
-            if value:
-                for comment in value:
-                    if len(comment.message)>5: #Condicional para sentimiento
-                        msjs.append("Positivo")
-                    else:
-                        msjs.append("Negativo")
-            else:
-                msjs.append("Sin sentimientos")
-            all_sentiments[key] = msjs
+    for key, value in all_comments.items():
+        msjs = []
+        if value:
+            for comment in value:
+                feeling = sentiment_analysis(comment.message)
+                print(i,": ",feeling)
+                i+=1
+                msjs.append(feeling)
+        else:
+            msjs.append("Sin sentimientos")
+        all_sentiments[key] = msjs
 
 
     return render_template(
@@ -115,3 +117,23 @@ def comments(page_id):
         all_comments = all_comments,
         all_sentiments = all_sentiments
     )
+
+def sentiment_analysis(comment):
+    """ Translate and make sentiment analysis to a comment
+
+    Args:
+        comment (String): Spanish comment
+
+    Returns:
+        String: Feeling of the comment
+    """
+    translator = Translator()
+    trans_text = translator.translate(comment, dest='en')
+    text = TextBlob(trans_text.text)
+    polarity = text.sentiment.polarity
+    feeling = 'Neutro'
+    if polarity > 0:
+        feeling = 'Positivo'
+    elif polarity < 0:
+        feeling = 'Negativo'
+    return feeling
