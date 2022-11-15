@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title %}Gráficas{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <article>
+        <header>
+            <div>
+                <h4>Page_id: {{ page_id }} - Archivo: {{ file_name }}</h4>
+            </div>
+            <div>
+                <a href="">listoooo</a>
+            </div>
+        </header>
+    </article>
+
+    <p>-----------------------</p>
+    {{ posts.describe() }} <br><br>
+    *******{{ posts.loc[0]['post_id'] }}
+    
+    <p>-----------------------</p>
+    {% for data in posts.describe() %}
+        {{ data }}
+    {% endfor %}
+    <p>-----------------------</p>
+
+    <p>-----------------------</p>
+    posts['share'] : <br>
+    Total -> {{  posts['share']|length  }} <br>
+    Datos ->
+    {% for data in posts['share'] %}
+        {{ data }}
+    {% endfor %}
+    <p>-----------------------</p>
+
+
+{% endblock %}

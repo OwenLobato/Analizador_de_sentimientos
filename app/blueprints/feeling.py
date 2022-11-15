@@ -53,7 +53,6 @@ def comments(page_id):
     all_post_react = []
     all_sentiments = {}
 
-    i = 1
     for post in posts_fetch:
         reactions_fetch = Reaction().find_by_params({'post_id': post.id})
 
@@ -100,13 +99,10 @@ def comments(page_id):
         if value:
             for comment in value:
                 feeling = sentiment_analysis(comment.message)
-                print(i,": ",feeling)
-                i+=1
                 msjs.append(feeling)
         else:
             msjs.append("Sin sentimientos")
         all_sentiments[key] = msjs
-
 
     return render_template(
         'feeling/comments.html',
