@@ -44,16 +44,24 @@ def __get_excel_files(page_id):
 def graphic(page_id, file):
     """ Graphics the excel data """
     file_path = 'static/uploads/' + file
+    page_fetch = Page().find_by_params({'id': page_id})
     posts = ExcelHelper(file_path).read_posts()
-    # reactions = ExcelHelper(file_path).read_reactions()
-    # comments = ExcelHelper(file_path).read_reactions()
-
-    print(posts.describe())
-
+    reactions = ExcelHelper(file_path).read_reactions()
+    comments = ExcelHelper(file_path).read_reactions()
 
     return render_template(
         'statistic/graphic.html',
-        page_id = page_id,
+        page_fetch = page_fetch,
         posts = posts,
+        reactions = reactions,
+        comments = comments,
         file_name =  file.split('___')[1]
     )
+
+
+# Gráfica 1: Por mes cantidad de H y M de comentarios totales
+# Gráfica 2: Mes y hora del post y reacciónes totales
+# Gráfica 3: Cantidad de comentarios por mes (H y M)
+# Gráfica 4: Número de compartidas de post por mes
+
+# Pasar de lectura de excel a lectura de mysql
