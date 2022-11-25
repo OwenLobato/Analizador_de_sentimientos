@@ -10,9 +10,9 @@
     {% else %}
         <form method="POST">
 
-            <label for="page_id">Pagina de restaurantes</label>
+            <label for="page_id">Páginas de restaurantes</label>
             <select name="page_id" id="page_id">
-                <option value="0">-- Seleccione una pagina --</option>
+                <option value="0">-- Seleccione una página --</option>
                 {% for page in pages %}
                     <option value="{{ page.id }}">{{ page.name }}</option>
                 {% endfor %}
@@ -22,21 +22,21 @@
         
         </form>
         {% if excel_files %}
-            <h2 class="text-primary pt-5 mb-3">Datos cargados previamente:</h2>
+            <h2 class="text-primary pt-5 mb-3">Datos de '{{ page_fetch.name }}' cargados previamente:</h2>
             {% for excel in excel_files %}
                 <article>
                     <header>
                         <div>
-                            <h4>{{ excel.split('___')[1] }}</h4>
+                            <h4>{{ excel.name.split('___')[1] }}</h4>
                         </div>
                         <div>
-                            <a href="{{ url_for('feeling.comments', page_id = excel.split('___')[0].split('_')[0]) }}">Seleccionar</a>
+                            <a href="{{ url_for('feeling.comments', file_id = excel.id) }}">Seleccionar</a>
                         </div>
                     </header>
                 </article>
             {% endfor %}
         {% else %}
-            <h2 class="text-danger text-center pt-5 mb-3">No hay datos registrados en esta página</h2>
+            <h2 class="text-danger text-center pt-5 mb-3">No hay datos registrados de '{{ page_fetch.name }}'</h2>
         {% endif %}
     {% endif %}
 

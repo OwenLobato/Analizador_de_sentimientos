@@ -38,7 +38,8 @@ def update(user_id):
             body = {
                 "name": user.name,
                 "role": user.role,
-                "restaurant_id": user.restaurant_id
+                "restaurant_id": user.restaurant_id,
+                "updated_by": g.user.id
             }
 
             if not user.name:
@@ -71,4 +72,13 @@ def update(user_id):
 def destroy(user_id):
     """ Destroy user """
     User().destroy(user_id)
+    return redirect(url_for('user.index'))
+
+@user_bp.route('/<int:user_id>/deactive', methods=['GET', 'POST'])
+@login_required
+def deactive(user_id):
+    """ Deactive restaurant """
+    deactive_user = User().deactive(user_id, g.user.id)
+    if deactive_user:
+        flash('Usuario desactivado correctamente', 'success')
     return redirect(url_for('user.index'))

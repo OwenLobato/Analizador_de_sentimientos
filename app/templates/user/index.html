@@ -2,6 +2,7 @@
 
 {% block header %}
     <h2>{% block title %}Usuarios{% endblock %}</h2>
+    <a href="{{ url_for('auth.register') }}">Nuevo usuario</a>
 {% endblock %}
 
 {% block content %}
@@ -14,7 +15,7 @@
                 <div>
                     {% if g.user %}
                         <a href="{{ url_for('user.update', user_id=user.id) }}">Actualizar</a>
-                        <a href="{{ url_for('user.destroy', user_id=user.id) }}">Eliminar</a>
+                        <a href="{{ url_for('user.deactive', user_id=user.id) }}">Desactivar</a>
                     {% endif %}
                 </div>
             </header>
