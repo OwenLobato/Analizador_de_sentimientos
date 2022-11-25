@@ -1,13 +1,14 @@
 """ RESTAURANT Module """
-from werkzeug.utils import secure_filename
-import os 
+import os
 from datetime import datetime
+from werkzeug.utils import secure_filename
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for
 from blueprints.auth import login_required
-from helpers.schedule import week_days, hours
 from models.restaurant_model import Restaurant
 from models.page_model import Page
 from models.schedule_model import Schedule
+from models.file_model import File
+from helpers.schedule import week_days, hours
 from helpers.excel_helper import ExcelHelper
 
 restaurant_bp = Blueprint('restaurant', __name__, url_prefix='/restaurants')
@@ -33,7 +34,8 @@ def page(restaurant_id):
             params = {
                 "restaurant_id": restaurant_id,
                 "name": name,
-                "followers": followers
+                "followers": followers,
+                "created_by": g.user.id
             }
             error = None
             if not name:
@@ -55,7 +57,8 @@ def page(restaurant_id):
             page_fetch.followers = request.form.get('followers')
             body = {
                 "name": page_fetch.name,
-                "followers": page_fetch.followers
+                "followers": page_fetch.followers,
+                "updated_by": g.user.id
             }
             error = None
             if not page_fetch.name:
@@ -137,7 +140,8 @@ def create():
             "name": name,
             "address": address,
             "region": region,
-            "kind": kind
+            "kind": kind,
+            "created_by": g.user.id
         }
         # Flash errors
         error = None
@@ -181,7 +185,8 @@ def update(restaurant_id):
                 "name": restaurant.name,
                 "address": restaurant.address,
                 "region": restaurant.region,
-                "kind": restaurant.kind
+                "kind": restaurant.kind,
+                "updated_by": g.user.id
             }
             if not restaurant.name:
                 error = 'Se requiere el nombre del restaurante'
@@ -210,45 +215,78 @@ def update(restaurant_id):
 @login_required
 def upload(restaurant_id):
     """ Upload data to a restaurant """
-    restaurant = Restaurant().find_by_params({'id': restaurant_id})
-
-    uploads = [f for f in os.listdir('static/uploads') if os.path.isfile(os.path.join('static/uploads', f))]
-    excel_files = [excel_name for excel_name in uploads if int(excel_name[0]) == restaurant_id]
+    restaurant_fetch = Restaurant().find_by_params({'id': restaurant_id})
+    page_fetch = Page().find_by_params({'restaurant_id': restaurant_id})
+    excel_files = None
+    if page_fetch:
+        excel_files = File().get_all({'page_id': page_fetch.id})
 
     if request.method == 'POST':
         page_fetch = Page().find_by_params({'restaurant_id': restaurant_id})
         if not page_fetch:
             flash('Favor de previamente registrar una pagina','error')
             return redirect(url_for('restaurant.upload', restaurant_id = restaurant_id))
-
+        # File naming
         excel_data = request.files['data']
-        now = datetime.now()
-        n_date = f"{now.year}{now.month}{now.day}"
-        n_hour = f"{now.hour}{now.minute}{now.second}"
-        name = f"{str(restaurant.id)}_{n_date}_{n_hour}___{excel_data.filename.replace(' ','_')}"
-        file_name = secure_filename(name)
-        path = 'static/uploads'
+        name = __name_excel_file(excel_data, restaurant_fetch.id)
+        # Folder creation
+        path = 'static/uploads/'
         if not os.path.exists(path):
             os.makedirs(path)
+        # File creation
+        file_name = secure_filename(name)
         file_path = os.path.abspath(f'{path}/{file_name}')
         excel_data.save(file_path)
-        excel_db = ExcelHelper(file_path).save_excel_data(restaurant_id)
+        # Save file in the DB
+        params = {
+            "page_id": page_fetch.id,
+            "name": name,
+            "path": path,
+            "created_by": g.user.id
+        }
+        file = File(**params)
+        file.create()
+        # Save file info in the DB
+        excel_db = ExcelHelper(file.path + file.name).save_excel_data(restaurant_id, file.id)
         if excel_db:
             flash('Archivo subido correctamente', 'success')
         else:
-            ExcelHelper(file_path).delete_excel_data(restaurant_id)
+            # ExcelHelper(file.path + file.name).delete_excel_data(restaurant_id, file.id)  # Rollback in case erro file
             flash('Elimine el archivo, corríjalo y vuelva a intentarlo', 'error')
         return redirect(url_for('restaurant.upload', restaurant_id = restaurant_id))
-    return render_template('restaurant/upload.html', restaurant=restaurant, excel_files=excel_files)
+    return render_template('restaurant/upload.html', restaurant=restaurant_fetch, excel_files=excel_files, page_fetch=page_fetch)
 
-@restaurant_bp.route('/<int:restaurant_id>/upload/delete/<excel>')
+def __name_excel_file(excel_data, restaurant_id):
+    """Generate excel file name
+
+    Args:
+        excel_data (file): Excel file
+        restaurant_id (int): Restaurant id
+
+    Returns:
+        String: New excel file name (id_date_hour___Excel_file_name.xslx)
+    """
+    now = datetime.now()
+    n_date = f"{now.year}{now.month}{now.day}"
+    n_hour = f"{now.hour}{now.minute}{now.second}"
+    name = f"{str(restaurant_id)}_{n_date}_{n_hour}___{excel_data.filename.replace(' ','_')}"
+    return name
+
+@restaurant_bp.route('/<int:restaurant_id>/upload/delete/<int:file_id>')
 @login_required
-def delete_excel(restaurant_id, excel):
+def delete_excel(restaurant_id, file_id):
     """ Delete excel data and file """
-    path = os.path.join('static/uploads', excel)
-    ExcelHelper(path).delete_excel_data(restaurant_id)
-    os.remove(path)
-    flash('Archivo borrado correctamente', 'success')
+    msj = 'Error en borrado de archivo'
+    status = 'error'
+    deactive_file = File().deactive(file_id, g.user.id)
+    if deactive_file:
+        file_fetch = File().find_by_params({'id': file_id})
+        path = os.path.join(file_fetch.path, file_fetch.name)
+        ExcelHelper(file_fetch.path + file_fetch.name).delete_excel_data(restaurant_id, file_id)
+        os.remove(path)
+        msj = 'Archivo borrado correctamente'
+        status = 'success'
+    flash(msj, status)
     return redirect(url_for('restaurant.upload', restaurant_id = restaurant_id))
 
 @restaurant_bp.route('/<int:restaurant_id>/destroy', methods=['GET', 'POST'])
@@ -256,4 +294,13 @@ def delete_excel(restaurant_id, excel):
 def destroy(restaurant_id):
     """ Destroy restaurant """
     Restaurant().destroy(restaurant_id)
+    return redirect(url_for('restaurant.index'))
+
+@restaurant_bp.route('/<int:restaurant_id>/deactive', methods=['GET', 'POST'])
+@login_required
+def deactive(restaurant_id):
+    """ Deactive restaurant """
+    deactive_rest = Restaurant().deactive(restaurant_id, g.user.id)
+    if deactive_rest:
+        flash('Restaurante desactivado correctamente', 'success')
     return redirect(url_for('restaurant.index'))

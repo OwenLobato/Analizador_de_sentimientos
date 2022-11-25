@@ -1,13 +1,10 @@
 """ FEELING Module """
-import os
-from textblob import TextBlob
-from googletrans import Translator
+
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for
 from blueprints.auth import login_required
+from models.file_model import File
 from models.page_model import Page
-from models.restaurant_model import Restaurant
 from models.post_model import Post
-from models.reaction_model import Reaction
 from models.comment_model import Comment
 
 feeling_bp = Blueprint('feeling', __name__, url_prefix='/feelings/pages')
@@ -19,117 +16,33 @@ def index(page_id = None):
     """ Index of sentiment analysis """
     params = request.args
     pages = Page().get_all(params)
-    if page_id:
-        excel_files = __get_excel_files(page_id)
-    else:
-        excel_files = []
+    page_fetch = Page().find_by_params({'id': page_id})
+    excel_files = File().get_all({'page_id': page_id})
     if request.method == 'POST':
         params = request.args
         pages = Page().get_all(params)
         page_id = request.form.get('page_id')
         if page_id is '0':
             flash('Seleccione una pagina', 'error')
-            return render_template('feeling/index.html', pages = pages, excel_files = [])
-        excel_files = __get_excel_files(page_id)
+            return render_template('feeling/index.html', pages = pages, excel_files = excel_files, page_id = page_id)
         return redirect(url_for('feeling.index', page_id = page_id))
-    return render_template('feeling/index.html', pages = pages, excel_files = excel_files)
+    return render_template('feeling/index.html', pages = pages, excel_files = excel_files, page_fetch = page_fetch)
 
-def __get_excel_files(page_id):
-    """ Get all the excel files by page_id """
-    page_fetch = Page().find_by_params({'id': page_id})
-    restaurant_fetch = Restaurant().find_by_params({'id': page_fetch.restaurant_id})
-    uploads = [f for f in os.listdir('static/uploads') if os.path.isfile(os.path.join('static/uploads', f))]
-    excel_files = [excel_name for excel_name in uploads if int(excel_name[0]) == restaurant_fetch.id]
-    return excel_files
-
-@feeling_bp.route('/<int:page_id>/comments', methods=['GET', 'POST'])
+@feeling_bp.route('/<int:file_id>/comments', methods=['GET', 'POST'])
 @login_required
-def comments(page_id):
+def comments(file_id):
     """ Post comments sentiment analysis """
-    posts_fetch = Post().get_all({'page_id': page_id}, True)
-
-    all_total = []
-    all_comments = {}
-    all_post_react = []
-    all_sentiments = {}
-
+    file_fetch = File().find_by_params({'id': file_id})
+    posts_fetch = Post().get_all({'file_id': file_id})
+    comments_fetch = {}
     for post in posts_fetch:
-        reactions_fetch = Reaction().find_by_params({'post_id': post.id})
-
-        total_reactions = Reaction().get_total_reactions(post.id)
-        all_total.append(total_reactions)
-
-        post_sent = ''
-        if total_reactions != 0:
-            reactions = {
-                "angry": reactions_fetch.angry,
-                "haha": reactions_fetch.haha,
-                "like": reactions_fetch.like,
-                "love": reactions_fetch.love,
-                "sad": reactions_fetch.sad,
-                "wow": reactions_fetch.wow,
-                "care": reactions_fetch.care
-            }
-            val_max = max(reactions, key = reactions.get)
-
-            if val_max == 'angry':
-                post_sent = 'Disgustante'
-            if val_max == 'haha':
-                post_sent = 'Divertida'
-            if val_max == 'like':
-                post_sent = 'Llamativa'
-            if val_max == 'love':
-                post_sent = 'Encantadora'
-            if val_max == 'sad':
-                post_sent = 'Triste'
-            if val_max == 'wow':
-                post_sent = 'Impresionante'
-            if val_max == 'care':
-                post_sent = 'Relevante'
-        else:
-            post_sent = 'Aburrida'
-        all_post_react.append(post_sent)
-
-
-        comments_fetch = Comment().get_all({'post_id': post.id})
-        all_comments[post.id] = comments_fetch
-
-    for key, value in all_comments.items():
-        msjs = []
-        if value:
-            for comment in value:
-                feeling = sentiment_analysis(comment.message)
-                msjs.append(feeling)
-        else:
-            msjs.append("Sin sentimientos")
-        all_sentiments[key] = msjs
+        all_comments = Comment().get_all({'post_id': post.id})
+        comments_fetch[post.id] = all_comments if all_comments else ['Sin comentarios']
 
     return render_template(
         'feeling/comments.html',
-        page_id = page_id,
+        file_id = file_id,
+        file_fetch = file_fetch,
         posts_fetch = posts_fetch,
-        all_post_react = all_post_react,
-        all_total = all_total,
-        all_comments = all_comments,
-        all_sentiments = all_sentiments
+        comments_fetch = comments_fetch
     )
-
-def sentiment_analysis(comment):
-    """ Translate and make sentiment analysis to a comment
-
-    Args:
-        comment (String): Spanish comment
-
-    Returns:
-        String: Feeling of the comment
-    """
-    translator = Translator()
-    trans_text = translator.translate(comment, dest='en')
-    text = TextBlob(trans_text.text)
-    polarity = text.sentiment.polarity
-    feeling = 'Neutro'
-    if polarity > 0:
-        feeling = 'Positivo'
-    elif polarity < 0:
-        feeling = 'Negativo'
-    return feeling
