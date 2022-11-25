@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+{% block customCSS %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
+{% endblock %}
 {% block header %}
     <h2>{% block title %}Cargar datos{% endblock %} - Restaurante '{{ restaurant.name }}'</h2>
 {% endblock %}
@@ -43,5 +45,14 @@
     {% else %}
         <h2 class="text-center text-danger pt-5 ">Restaurante sin página existente, registrala en Restaurantes > Actualizar > Página</h2>
     {% endif %}
+
+    <!-- Loader -->
+    <div class="lds-ring loader" id="loader"><div></div><div></div><div></div><div></div></div>
+    <script>
+        window.addEventListener("load", function(){
+            var element = document.getElementById("loader");
+            element.classList.toggle("loader2");
+        })
+    </script>
 
 {% endblock %}
