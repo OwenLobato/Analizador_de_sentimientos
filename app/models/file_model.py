@@ -1,15 +1,15 @@
-""" PAGE model module """
+""" FILE model module """
 
 from db import db
 from datetime import datetime
 
-class Page(db.Model):
-    """ Page model class """
-    __tablename__ = 'page'
+class File(db.Model):
+    """ File model class """
+    __tablename__ = "file"
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"), nullable=False)
+    page_id = db.Column(db.Integer, db.ForeignKey("page.id"), nullable=False)
     name = db.Column(db.String(45), nullable=False)
-    followers = db.Column(db.Integer, nullable=False, default=0)
+    path = db.Column(db.String(45), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False)
     updated_at = db.Column(db.DateTime, nullable=True)
     deleted_at = db.Column(db.DateTime, nullable=True)
@@ -19,9 +19,9 @@ class Page(db.Model):
 
     fields = [
         "id",
-        "restaurant_id",
+        "page_id",
         "name",
-        "followers",
+        "path",
         "created_at",
         "updated_at",
         "deleted_at",
@@ -34,49 +34,54 @@ class Page(db.Model):
         """ Validate if sent params are valid """
         for param in params:
             if param not in self.fields:
-                print("**************** ERROR PAGE PARAMS **************")
+                print("**************** ERROR FILE PARAMS **************")
 
     def get_all(self, params=None):
-        """ Get all pages """
+        """ Get all files """
         self.__validate_params(params)
-        return self.query.filter_by(deleted_at=None, **params).all()
+        return self.query.filter_by(**params).all()
 
     def create(self):
-        """ Create a page using an instance of class """
+        """ Create a file using an instance of class """
         self.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         db.session.add(self)
         db.session.commit()
 
     def find_by_params(self, params):
-        """ Get the first page coincidence to the given params """
+        """ Get the first file coincidence to the given params """
         self.__validate_params(params)
         return self.query.filter_by(**params).first()
 
     def update(self, id, params):
-        """ Update a page """
-        page = self.find_by_params({'id': id, 'deleted_at': None})
-        if page:
+        """ Update a file """
+        file = self.find_by_params({'id': id, 'deleted_at': None})
+        if file:
             for key, value in params.items():
-                setattr(page, key, value)
+                setattr(file, key, value)
             db.session.commit()
             return self.find_by_params({'id': id})
         return None
 
-    def deactive(self, id, params):
-        """ Logic deleted a page """
-        page = self.find_by_params({'id': id, 'deleted_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
-        if page:
+    def deactive(self, file_id, g_user_id):
+        """ Logic deleted a file """
+        params = {
+            'deleted_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            'deleted_by': g_user_id
+        }
+        file = self.find_by_params({'id': file_id})
+        if file:
             for key, value in params.items():
-                setattr(page, key, value)
+                setattr(file, key, value)
             db.session.commit()
-            return self.find_by_params({'id': id})
+            return self.find_by_params({'id': file_id})
+        return None
         return None
 
-    def destroy(self, page_id):
-        """ Destroy an page """
-        page = self.find_by_params({"id": page_id})
-        if page:
-            db.session.delete(page)
+    def destroy(self, file_id):
+        """ Destroy an file """
+        file = self.find_by_params({"id": file_id})
+        if file:
+            db.session.delete(file)
             db.session.commit()
             return True
         return False

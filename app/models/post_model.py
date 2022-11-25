@@ -8,23 +8,40 @@ class Post(db.Model):
     """ Post model class """
     __tablename__ = 'post'
     id = db.Column(db.String(16), primary_key=True, nullable=False)
-    page_id = db.Column(db.Integer, db.ForeignKey("page.id"), nullable=False)
+    file_id = db.Column(db.Integer, db.ForeignKey("page.id"), nullable=False)
     created_time = db.Column(db.Time, nullable=False)
     created_date = db.Column(db.Date, nullable=False)
     message = db.Column(db.Text, nullable=False)
     classification = db.Column(db.String(30), nullable=False)
     xformat = db.Column(db.String(30), nullable=False)
     share = db.Column(db.Integer, nullable=False, default=0)
+    angry = db.Column(db.Integer, nullable=False, default=0)
+    haha = db.Column(db.Integer, nullable=False, default=0)
+    like = db.Column(db.Integer, nullable=False, default=0)
+    love = db.Column(db.Integer, nullable=False, default=0)
+    sad = db.Column(db.Integer, nullable=False, default=0)
+    wow = db.Column(db.Integer, nullable=False, default=0)
+    care = db.Column(db.Integer, nullable=False, default=0)
+    reaction = db.Column(db.String(13), nullable=False)
+
 
     fields = [
         "id",
-        "page_id",
+        "file_id",
         "created_time",
         "created_date",
         "message",
         "classification",
         "xformat",
-        "share"
+        "share",
+        "angry",
+        "haha",
+        "like",
+        "love",
+        "sad",
+        "wow",
+        "care",
+        "reaction"
     ]
 
     def __validate_params(self, params):
@@ -60,9 +77,9 @@ class Post(db.Model):
             return self.find_by_params({'id': id})
         return None
 
-    def destroy(self, page_id):
+    def destroy(self, file_id):
         """Destroy all post from a restaurant in DB"""
-        posts = self.get_all({"page_id": page_id})
+        posts = self.get_all({"file_id": file_id})
         if posts:
             for post in posts:
                 db.session.delete(post)

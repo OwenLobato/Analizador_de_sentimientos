@@ -18,17 +18,51 @@ CREATE SCHEMA IF NOT EXISTS `analizador` DEFAULT CHARACTER SET utf8mb4 COLLATE u
 USE `analizador`;
 
 -- -----------------------------------------------------
+-- Table `analizador`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `analizador`.`user` ;
+
+CREATE TABLE IF NOT EXISTS `analizador`.`user` (
+    `id` 			INT 		 NOT NULL AUTO_INCREMENT,
+    `email` 		VARCHAR(50)  NOT NULL,
+    `password`	    VARCHAR(255) NOT NULL,
+    `name`	 	    VARCHAR(45)  NOT NULL,
+    `role` 		    VARCHAR(30)  NOT NULL,
+    `restaurant_id` INT 		 NULL,
+    `created_at`    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`    DATETIME     NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    `deleted_at`    DATETIME     NULL     DEFAULT NULL,
+    `created_by`    INT          NULL, 
+    `updated_by`    INT          NULL     DEFAULT NULL,
+    `deleted_by`    INT          NULL     DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`restaurant_id`) REFERENCES `analizador`.`restaurant`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`created_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`updated_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`deleted_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `analizador`.`restaurant`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `analizador`.`restaurant`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`restaurant` (
-    `id`      INT         NOT NULL AUTO_INCREMENT,
-    `name`    VARCHAR(45) NOT NULL,
-    `address` VARCHAR(80) NOT NULL,
-    `region`  VARCHAR(45) NOT NULL,
-    `kind`    VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`)
+    `id`         INT         NOT NULL AUTO_INCREMENT,
+    `name`       VARCHAR(45) NOT NULL,
+    `address`    VARCHAR(80) NOT NULL,
+    `region`     VARCHAR(45) NOT NULL,
+    `kind`       VARCHAR(45) NOT NULL,
+    `created_at` DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME    NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    `deleted_at` DATETIME    NULL     DEFAULT NULL,
+    `created_by` INT         NOT NULL, 
+    `updated_by` INT         NULL     DEFAULT NULL,
+    `deleted_by` INT         NULL     DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`created_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`updated_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`deleted_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -44,28 +78,8 @@ CREATE TABLE IF NOT EXISTS `analizador`.`schedule` (
     `schedule_name` VARCHAR(12) NOT NULL,
     `restaurant_id` INT         NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`restaurant_id`)
-    REFERENCES `analizador`.`restaurant`(`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION
+    FOREIGN KEY (`restaurant_id`) REFERENCES `analizador`.`restaurant`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `analizador`.`user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `analizador`.`user` ;
-
-CREATE TABLE IF NOT EXISTS `analizador`.`user` (
-    `id` 			INT 		 NOT NULL AUTO_INCREMENT,
-    `email` 		VARCHAR(50)  NOT NULL,
-    `password`	    VARCHAR(255) NOT NULL,
-    `name`	 	    VARCHAR(45)  NOT NULL,
-    `role` 		    VARCHAR(30)  NOT NULL,
-    `restaurant_id` INT 		 NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`restaurant_id`)
-    REFERENCES `analizador`.`restaurant`(`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `analizador`.`page`
@@ -76,11 +90,41 @@ CREATE TABLE IF NOT EXISTS `analizador`.`page` (
     `id` 			INT 		NOT NULL AUTO_INCREMENT,
     `restaurant_id` INT 		NOT NULL,
     `name` 		    VARCHAR(45) NOT NULL,
-    `followers` 	INT 		NOT NULL DEFAULT(0),
+    `followers` 	INT 		NOT NULL DEFAULT 0,
+    `created_at`    DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`    DATETIME    NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    `deleted_at`    DATETIME    NULL     DEFAULT NULL,
+    `created_by`    INT         NOT NULL, 
+    `updated_by`    INT         NULL     DEFAULT NULL,
+    `deleted_by`    INT         NULL     DEFAULT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`restaurant_id`)
-    REFERENCES `analizador`.`restaurant`(`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION
+    FOREIGN KEY (`restaurant_id`) REFERENCES `analizador`.`restaurant`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`created_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`updated_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`deleted_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+)ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `analizador`.`file`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `analizador`.`file`;
+
+CREATE TABLE IF NOT EXISTS `analizador`.`file` (
+    `id` 		 INT 		  NOT NULL AUTO_INCREMENT,
+    `page_id`    INT 		  NOT NULL,
+    `name` 		 VARCHAR(100) NOT NULL,
+    `path` 		 VARCHAR(50)  NOT NULL DEFAULT 'static/uploads/',
+    `created_at` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME     NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    `deleted_at` DATETIME     NULL     DEFAULT NULL,
+    `created_by` INT          NOT NULL, 
+    `updated_by` INT          NULL     DEFAULT NULL,
+    `deleted_by` INT          NULL     DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`page_id`) REFERENCES `analizador`.`page`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`created_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`updated_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY (`deleted_by`) REFERENCES `analizador`.`user`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -90,17 +134,23 @@ DROP TABLE IF EXISTS `analizador`.`post`;
 
 CREATE TABLE IF NOT EXISTS `analizador`.`post` (
     `id` 		     VARCHAR(16) NOT NULL,
-    `page_id` 	     INT 		 NOT NULL,
+    `file_id` 	     INT 		 NOT NULL,
     `created_time`   TIME 		 NOT NULL,
     `created_date`   DATE 		 NOT NULL,
     `message` 	     TEXT		 NOT NULL,
     `classification` VARCHAR(30) NOT NULL,
     `xformat`		 VARCHAR(30) NOT NULL,
-    `share` 		 INT 		 NOT NULL DEFAULT(0),
+    `share` 		 INT 		 NOT NULL DEFAULT 0,
+    `angry`	         INT         NOT NULL DEFAULT 0,
+    `haha`	         INT         NOT NULL DEFAULT 0,
+    `like` 	         INT         NOT NULL DEFAULT 0,
+    `love` 	         INT         NOT NULL DEFAULT 0,
+    `sad` 	         INT         NOT NULL DEFAULT 0,
+    `wow` 	         INT         NOT NULL DEFAULT 0,
+    `care` 	         INT         NOT NULL DEFAULT 0,
+    `reaction`       VARCHAR(13) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`page_id`)
-    REFERENCES `analizador`.`page`(`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION
+    FOREIGN KEY (`file_id`) REFERENCES `analizador`.`file`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -116,50 +166,22 @@ CREATE TABLE IF NOT EXISTS `analizador`.`comment` (
     `created_time` TIME 	   NOT NULL,
     `created_date` DATE		   NOT NULL,
     `message`	   TEXT		   NOT NULL,
-    `reactions`	   INT 		   NOT NULL DEFAULT(0),
+    `feeling`	   VARCHAR(15) NOT NULL,
+    `reactions`	   INT 		   NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`post_id`) 
-    REFERENCES `analizador`.`post`(`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION
+    FOREIGN KEY (`post_id`) REFERENCES `analizador`.`post`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 )ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table `analizador`.`reaction`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `analizador`.`reaction` ;
+INSERT INTO user (email, password, name, role, created_by)
+VALUES ('owen@gmail.com','pbkdf2:sha256:260000$cEQ0e7mMNwmCHjaB$b44946b91030a524234d09fe0533179c2a47fd36ca194e9c171451a6052c8d33','Owen Lobato','Admin',1);
 
-CREATE TABLE IF NOT EXISTS `analizador`.`reaction` (
-    `id`      INT         NOT NULL AUTO_INCREMENT,
-    `post_id` VARCHAR(16) NOT NULL,
-    `angry`	  INT         NOT NULL DEFAULT(0),
-    `haha`	  INT         NOT NULL DEFAULT(0),
-    `like` 	  INT         NOT NULL DEFAULT(0),
-    `love` 	  INT         NOT NULL DEFAULT(0),
-    `sad` 	  INT         NOT NULL DEFAULT(0),
-    `wow` 	  INT         NOT NULL DEFAULT(0),
-    `care` 	  INT         NOT NULL DEFAULT(0),
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`post_id`)
-    REFERENCES `analizador`.`post` (`id`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION
-)ENGINE = InnoDB;
+INSERT INTO restaurant (name, address, region, kind, created_by) VALUES ('Cuaxiote','Las palmas #34 Centro','Colima','Comida mexicana',1);
+INSERT INTO restaurant (name, address, region, kind, created_by) VALUES ('Las brasas','Madero #486 colibri','Villa de Alvarez','Carnes asadas',1);
+INSERT INTO restaurant (name, address, region, kind, created_by) VALUES ('Don comalon','La pasadita #414 portales','Comala','Botanero',1);
+INSERT INTO restaurant (name, address, region, kind, created_by) VALUES ('El asador de chanfaino','Piedras calientes #846 Parotales','Colima','Carnes asadas',1);
 
-INSERT INTO user (email, password, name, role)
-VALUES ('owen@gmail.com','pbkdf2:sha256:260000$cEQ0e7mMNwmCHjaB$b44946b91030a524234d09fe0533179c2a47fd36ca194e9c171451a6052c8d33','Owen Lobato','Admin');
-
-INSERT INTO restaurant (name, address, region, kind)
-VALUES ('Cuaxiote','Las palmas #34 Centro','Colima','Comida mexicana');
-INSERT INTO restaurant (name, address, region, kind)
-VALUES ('Las brasas','Madero #486 colibri','Villa de Alvarez','Carnes asadas');
-INSERT INTO restaurant (name, address, region, kind)
-VALUES ('Don comalon','La pasadita #414 portales','Comala','Botanero');
-INSERT INTO restaurant (name, address, region, kind)
-VALUES ('El asador de chanfaino','Piedras calientes #846 Parotales','Colima','Carnes asadas');
-
-INSERT INTO page (restaurant_id, name, followers)
-VALUES (1,'Cuaxiote', 1580);
-INSERT INTO page (restaurant_id, name, followers)
-VALUES (2,'Las brasas', 4186);
+INSERT INTO page (restaurant_id, name, followers, created_by) VALUES (1,'Cuaxiote', 1580,1);
+INSERT INTO page (restaurant_id, name, followers, created_by) VALUES (2,'Las brasas', 4186,1);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

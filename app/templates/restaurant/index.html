@@ -18,7 +18,7 @@
                     {% if g.user %}
                         <a href="{{ url_for('restaurant.upload', restaurant_id=restaurant.id) }}">Cargar datos</a>
                         <a href="{{ url_for('restaurant.update', restaurant_id=restaurant.id) }}">Actualizar</a>
-                        <a href="{{ url_for('restaurant.destroy', restaurant_id=restaurant.id) }}">Eliminar</a>
+                        <a href="{{ url_for('restaurant.deactive', restaurant_id=restaurant.id) }}">Desactivar</a>
                     {% endif %}
                 </div>
             </header>

@@ -12,6 +12,7 @@ class Comment(db.Model):
     created_time = db.Column(db.Time, nullable=False)
     created_date = db.Column(db.Date, nullable=False)
     message = db.Column(db.Text, nullable=False)
+    feeling = db.Column(db.String(15), nullable=False)
     reactions = db.Column(db.Integer, nullable=False, default=0)
 
     fields = [
@@ -21,7 +22,8 @@ class Comment(db.Model):
         "gender",
         "created_time",
         "created_date",
-        "message"
+        "message",
+        "feeling",
         "reactions"
     ]
 

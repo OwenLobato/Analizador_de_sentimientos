@@ -29,7 +29,8 @@ def register():
             "password": generate_password_hash(password),
             "name": name,
             "role": role,
-            "restaurant_id": restaurant_id
+            "restaurant_id": restaurant_id,
+            "created_by": g.user.id if g.user is not None else g.user
         }
         # Flash errors
         error = None
