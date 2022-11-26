@@ -5,4 +5,39 @@
 {% endblock %}
 
 {% block content %}
+    {% if pages == [] %}
+        <h1 class="text-center pt-5 text-danger">No existen páginas de restaurantes, favor de registrar una en la seccion: <br> Restaurantes > Actualizar > Pagina > Crear</h1>
+    {% else %}
+        <form method="POST">
+
+            <label for="page_id">Páginas de restaurantes</label>
+            <select name="page_id" id="page_id">
+                <option value="0">-- Seleccione una página --</option>
+                {% for page in pages %}
+                    <option value="{{ page.id }}">{{ page.name }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Buscar datos">
+        
+        </form>
+        {% if excel_files %}
+            <h2 class="text-primary pt-5 mb-3">Datos de '{{ page_fetch.name }}' cargados previamente:</h2>
+            {% for excel in excel_files %}
+                <article>
+                    <header>
+                        <div>
+                            <h4>{{ excel.name.split('___')[1] }}</h4>
+                        </div>
+                        <div>
+                            <a href="{{ url_for('kpi.analysis', file_id = excel.id) }}">Seleccionar</a>
+                        </div>
+                    </header>
+                </article>
+            {% endfor %}
+        {% else %}
+            <h2 class="text-danger text-center pt-5 mb-3">No hay datos registrados de '{{ page_fetch.name }}'</h2>
+        {% endif %}
+    {% endif %}
+
 {% endblock %}
