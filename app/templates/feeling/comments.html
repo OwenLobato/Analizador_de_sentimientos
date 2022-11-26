@@ -5,21 +5,20 @@
 {% endblock %}
 
 {% block content %}
+    <article>
+        <header>
+            <div>
+                <h4>Archivo: {{ file_fetch.name.split('___')[1] }}</h4>
+            </div>
+        </header>
+    </article>
 
-        <article>
-            <header>
-                <div>
-                    <h4>Archivo: {{ file_fetch.name.split('___')[1] }}</h4>
-                </div>
-            </header>
-        </article>
-
-        {% for post in posts_fetch %}
-            <p>***********************</p>
-            <p>{{ post }}</p>
-            {% for comment in comments_fetch[post.id] %}
-                <p>{{ comment }}</p>
-            {% endfor %}
-        {% endfor %} 
+    {% for post in posts_fetch %}
+        <p>***********************</p>
+        <p>{{ post }}</p>
+        {% for comment in comments_fetch[post.id] %}
+            <p>{{ comment }}</p>
+        {% endfor %}
+    {% endfor %} 
 
 {% endblock %}

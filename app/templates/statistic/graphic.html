@@ -8,10 +8,7 @@
     <article>
         <header>
             <div>
-                <h4>Página: {{ page_fetch.name }} - Archivo: {{ file_name }}</h4>
-            </div>
-            <div>
-                <a href="">listoooo</a>
+                <h4>Archivo: {{ file_fetch.name.split('___')[1] }}</h4>
             </div>
         </header>
     </article>
@@ -37,7 +34,14 @@
             <div><span><h4>Grafica 4:</h4></span></div>
             <canvas id="myChart4"  style="max-width: 500px; max-height: 500px; margin-left: 0px;"></canvas> 
         </div>
-        <input id="posts" type="hidden" value="{{ posts['created_date']}}" name="posts"></input>
+
+        {% for post in posts_fetch %}
+            <p>***********************</p>
+            <p>{{ post }}</p>
+            {% for comment in comments_fetch[post.id] %}
+                <p>{{ comment }}</p>
+            {% endfor %}
+        {% endfor %} 
 
     </div>
 
