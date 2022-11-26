@@ -14,7 +14,7 @@
             <label for="data">Seleccione archivo con extensión ".xlsx"</label>
             <input type="file" name="data" id="data" accept=".xlsx" required>
 
-            <input type="submit" value="Cargar">
+            <input id="cargar" type="submit" value="Cargar">
 
         </form>
 
@@ -27,14 +27,14 @@
                     <header>
                         <div>
                             {% if excel.deleted_at %}
-                                <h4 class="text-danger">{{ excel.name.split("___")[1] }}</h4>
+                                <h4 id="danger" class="text-danger">{{ excel.name.split("___")[1] }}</h4>  
                             {% else %}
-                                <h4>{{ excel.name.split("___")[1] }}</h4>
+                                <h4> {{excel.name.split("___")[1] }}</h4>
                             {% endif %}
                         </div>
                         <div>
                             {% if not excel.deleted_at %}
-                                <a href="{{ url_for('restaurant.delete_excel', restaurant_id=restaurant.id, file_id=excel.id) }}">Eliminar</a>
+                                <a id="delete_file" href="{{ url_for('restaurant.delete_excel', restaurant_id=restaurant.id, file_id=excel.id) }}">Eliminar</a>
                             {% endif %}
                         </div>
                     </header>
@@ -47,11 +47,22 @@
     {% endif %}
 
     <!-- Loader -->
-    <div class="lds-ring loader" id="loader"><div></div><div></div><div></div><div></div></div>
+    <div class="load_cont" id="load_cont">
+        <div class="load_1">
+            <div class="cube loader" id="loader"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+        <div class="load_2">
+            <span id="spn">Cargando...</span>
+        <div>
+    </div>
     <script>
-        window.addEventListener("load", function(){
-            var element = document.getElementById("loader");
-            element.classList.toggle("loader2");
+        $("#load_cont").hide();
+        $("#cargar").click(function(){
+            $("#load_cont").show();
+        });
+        $("#delete_file").click(function(){
+            $('#spn').text("Borrando ...");
+            $("#load_cont").show();
         })
     </script>
 
