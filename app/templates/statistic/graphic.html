@@ -37,6 +37,7 @@
             <div><span><h4>Grafica 4:</h4></span></div>
             <canvas id="myChart4"  style="max-width: 500px; max-height: 500px; margin-left: 0px;"></canvas> 
         </div>
+        <input id="posts" type="hidden" value="{{ posts['created_date']}}" name="posts"></input>
 
     </div>
 
@@ -45,6 +46,5 @@
         {% include 'statistic/graphic.js' %}
     </script>
 
-    {% include 'statistic/test.html' %}
 
 {% endblock %}

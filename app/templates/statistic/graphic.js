@@ -1,8 +1,21 @@
+let posts;
+posts=$('#posts').val();
+
+let cadena="2021-04-22";
+function cuantasVecesAparece(cadena, posts){
+    var indices = [];
+    for(var i = 0; i < cadena.length; i++) {
+      if (cadena[i].toLowerCase() === posts) indices.push(i);
+    }
+      return console.log(indices.length);
+  }
+
 
 var ctx = document.getElementById("myChart1").getContext("2d");
 var ctx2 = document.getElementById("myChart").getContext("2d");
 var ctx3 = document.getElementById("myChart3").getContext("2d");
 var ctx4 = document.getElementById("myChart4").getContext("2d");
+
 
 var myChart2= new Chart(ctx2,{
     type:"line",
@@ -11,7 +24,7 @@ var myChart2= new Chart(ctx2,{
         datasets:[{
             label:'Num datos',
             label:'Num datos',
-            data:[1,9,15,12],
+            data:[posts],
             backgroundColor:[
                 'rgba(66, 134, 244,0.1)',
                 'rgba(66, 13, 244,0.1)',
