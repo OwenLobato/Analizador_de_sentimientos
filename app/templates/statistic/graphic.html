@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h2>{% block title %}Gráficas{% endblock %}</h2>
+    <h2>{% block title %}Gráficas estadisticas{% endblock %}</h2>
 {% endblock %}
 
 {% block content %}
     <article>
         <header>
             <div>
-                <h4>Page_id: {{ page_id }} - Archivo: {{ file_name }}</h4>
+                <h4>Página: {{ page_fetch.name }} - Archivo: {{ file_name }}</h4>
             </div>
             <div>
                 <a href="">listoooo</a>
@@ -16,24 +16,35 @@
         </header>
     </article>
 
-    <p>-----------------------</p>
-    {{ posts.describe() }} <br><br>
-    *******{{ posts.loc[0]['post_id'] }}
-    
-    <p>-----------------------</p>
-    {% for data in posts.describe() %}
-        {{ data }}
-    {% endfor %}
-    <p>-----------------------</p>
+    <div class="row">
 
-    <p>-----------------------</p>
-    posts['share'] : <br>
-    Total -> {{  posts['share']|length  }} <br>
-    Datos ->
-    {% for data in posts['share'] %}
-        {{ data }}
-    {% endfor %}
-    <p>-----------------------</p>
+        <div id='objeto' class='col-sm-6'>
+            <div><span><h4>Grafica 1:</h4></span></div>
+            <canvas id="myChart"  style="max-width: 500px; max-height: 500px;"></canvas>
+        </div>
+
+        <div id='objeto' class='col-sm-6'>
+            <div><span><h4>Grafica 2:</h4></span></div>
+            <canvas id="myChart1"  style="max-width: 500px; max-height: 500px; margin-left: 0px;"></canvas> 
+        </div>
+
+        <div id='objeto' class='col-sm-6'>
+            <div><span><h4>Grafica 3:</h4></span></div>
+            <canvas id="myChart3"  style="max-width: 500px; max-height: 500px; margin-left: 0px;"></canvas> 
+        </div>
+
+        <div id='objeto' class='col-sm-6'>
+            <div><span><h4>Grafica 4:</h4></span></div>
+            <canvas id="myChart4"  style="max-width: 500px; max-height: 500px; margin-left: 0px;"></canvas> 
+        </div>
+        <input id="posts" type="hidden" value="{{ posts['created_date']}}" name="posts"></input>
+
+    </div>
+
+    <!-- JavaScript graphics logic -->
+    <script>
+        {% include 'statistic/graphic.js' %}
+    </script>
 
 
 {% endblock %}
