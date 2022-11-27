@@ -1,10 +1,10 @@
 """ KPI Module """
 
-from datetime import datetime
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for
 from blueprints.auth import login_required
 from models.file_model import File
 from models.page_model import Page
+from models.post_model import Post
 from helpers.excel_helper import ExcelHelper
 
 kpi_bp = Blueprint('kpi', __name__, url_prefix='/kpis/pages')
@@ -33,14 +33,16 @@ def index(page_id = None):
 def analysis(file_id):
     """ Post comments kpis """
     (file_fetch, posts_fetch, comments_fetch) = ExcelHelper('').read_db_file(file_id)
-
+    if request.method == 'POST':
+        start_date = request.form.get('start_date')
+        finish_date = request.form.get('finish_date')
 
     return render_template(
         'kpi/analysis.html',
-        today_date = datetime.now().strftime("%Y-%m-%d"),
+        oldest_date = Post().get_oldest_date(file_id),
+        recent_date = Post().get_recent_date(file_id),
         file_id = file_id,
         file_fetch = file_fetch,
         posts_fetch = posts_fetch,
         comments_fetch = comments_fetch
     )
-

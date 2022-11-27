@@ -238,12 +238,12 @@ class ExcelHelper():
             file_id (int): Id of the excel file
 
         Returns:
-            file_fetch (File obj): File object by id 
+            file_fetch (File obj): File object by id
             posts_fetch (List): POSTS objects
             comments_fetch (Dict): COMMENTS objects, (Key: post_id - Value: Comment)
         """
         file_fetch = File().find_by_params({'id': file_id})
-        posts_fetch = Post().get_all({'file_id': file_id})
+        posts_fetch = Post().get_all({'file_id': file_id}, True)
         comments_fetch = {}
         for post in posts_fetch:
             all_comments = Comment().get_all({'post_id': post.id})

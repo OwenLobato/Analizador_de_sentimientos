@@ -13,6 +13,18 @@
         </header>
     </article>
 
+    <form method="POST">
+
+        <label for="start">Fecha de inicio:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ oldest_date }}" min="{{ oldest_date }}" max="{{ recent_date }}">
+
+        <label for="start">Fecha de termino:</label>
+        <input type="date" id="finish_date" name="finish_date" value="{{ recent_date }}" min="{{ oldest_date }}" max="{{ recent_date }}">
+
+        <input type="submit" value="Analizar">
+
+    </form>
+
     {% for post in posts_fetch %}
         <p>***********************</p>
         <p>{{ post }}</p>

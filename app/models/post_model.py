@@ -86,3 +86,15 @@ class Post(db.Model):
                 db.session.commit()
             return True
         return False
+
+    def get_oldest_date(self, file_id):
+        """ Get the oldest post date of a file """
+        posts = self.get_all({"file_id": file_id}, True)
+        oldest_date = posts[0].created_date
+        return oldest_date
+
+    def get_recent_date(self, file_id):
+        """ Get the recent post date of a file """
+        posts = self.get_all({"file_id": file_id}, True)
+        recent_date = posts[-1].created_date
+        return recent_date
