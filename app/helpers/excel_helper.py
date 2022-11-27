@@ -117,8 +117,8 @@ class ExcelHelper():
             except ValueError as e:
                 error = 'Error en formato:', e
                 return flash(error, 'error')
-            except:
-                return flash('Limpie y ponga en formato su archivo para publicaciones', 'error')
+            except Exception as e:
+                return flash(f"Limpie y ponga en formato su archivo para publicaciones: {e}", 'error')
         return True
 
     def __get_post_reaction(self, post_reactions):
@@ -192,7 +192,7 @@ class ExcelHelper():
                 error = 'Error en formato:', e
                 return flash(error, 'error')
             except Exception as e:
-                return flash('Limpie y ponga en formato su archivo para los comentarios', 'error')
+                return flash(f"Limpie y ponga en formato su archivo para los comentarios: {e}", 'error')
         return True
 
     def __get_message_sentiment(self, comment):
