@@ -25,6 +25,30 @@
 
     </form>
 
+    <br>
+
+    <div>
+        <h2>Alcance</h2>
+            <h5>Tasa de crecimiento de la audiencia</h5>
+                <p>(Nuevos seguidores / Total de seguidores) * 100 = {{ growth_rate }} </p>
+            <h5>Alcance de la publicación</h5>
+                <p>(Vistas de la publicacion / Total de seguidores) * 100 = {{ post_reach }} </p>
+
+        <br><br>
+
+        <h2>Interaccion</h2>
+            <h5>Tasa de aplauso</h5>
+                <p>(Likes / Seguidores) * 100 = {{ applause_rate }} </p>
+            <h5>Tasa de interacción promedio</h5>
+                <p>(Likes + Comentarios + Compartidas / Total de seguidores) * 100 = {{ avg_engagement_rate }} </p>
+            <h5>Tasa de amplificación</h5>
+                <p>(Compartidas / Total de seguidores) * 100 = {{ amplification_rate }} </p>
+            <h5>Tasa de viralidad</h5>
+                <p>(Nuevos seguidores / Total de seguidores) * 100 = {{ virality_rate }} </p>
+    </div>
+
+    <br><br><br>
+
     {% for post in posts_fetch %}
         <p>***********************</p>
         <p>{{ post }}</p>

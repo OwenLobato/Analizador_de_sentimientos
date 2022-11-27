@@ -33,16 +33,68 @@ def index(page_id = None):
 def analysis(file_id):
     """ Post comments kpis """
     (file_fetch, posts_fetch, comments_fetch) = ExcelHelper('').read_db_file(file_id)
+    (growth_rate, post_reach, applause_rate, avg_engagement_rate, amplification_rate, virality_rate) = __get_kips()
     if request.method == 'POST':
         start_date = request.form.get('start_date')
         finish_date = request.form.get('finish_date')
 
     return render_template(
         'kpi/analysis.html',
+        # Date
         oldest_date = Post().get_oldest_date(file_id),
         recent_date = Post().get_recent_date(file_id),
+        # File
         file_id = file_id,
         file_fetch = file_fetch,
         posts_fetch = posts_fetch,
-        comments_fetch = comments_fetch
+        comments_fetch = comments_fetch,
+        # KPIs
+        growth_rate = growth_rate,
+        post_reach = post_reach,
+        applause_rate = applause_rate,
+        avg_engagement_rate = avg_engagement_rate,
+        amplification_rate = amplification_rate,
+        virality_rate = virality_rate
+    )
+
+# Get KPIs functions
+
+def __get_kpi_growth_rate():
+    growth_rate = 1
+    return growth_rate
+
+def __get_kpi_post_reach():
+    post_reach = 2
+    return post_reach
+
+def __get_kpi_applause_rate():
+    applause_rate = 3
+    return applause_rate
+
+def __get_kpi_avg_engagement_rate():
+    avg_engagement_rate = 4
+    return avg_engagement_rate
+
+def __get_kpi_amplification_rate():
+    amplification_rate = 5
+    return amplification_rate
+
+def __get_kpi_virality_rate():
+    virality_rate = 6
+    return virality_rate
+
+def __get_kips():
+    growth_rate = __get_kpi_growth_rate()
+    post_reach = __get_kpi_post_reach()
+    applause_rate = __get_kpi_applause_rate()
+    avg_engagement_rate = __get_kpi_avg_engagement_rate()
+    amplification_rate = __get_kpi_amplification_rate()
+    virality_rate = __get_kpi_virality_rate()
+    return (
+        growth_rate,
+        post_reach,
+        applause_rate,
+        avg_engagement_rate,
+        amplification_rate,
+        virality_rate
     )
