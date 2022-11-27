@@ -229,3 +229,23 @@ class ExcelHelper():
             for post in posts_fetch:
                 Comment().destroy(post.id)
             Post().destroy(file_id)
+
+    @staticmethod
+    def read_db_file(file_id):
+        """ Read db excel file by id
+
+        Args:
+            file_id (int): Id of the excel file
+
+        Returns:
+            file_fetch (File obj): File object by id 
+            posts_fetch (List): POSTS objects
+            comments_fetch (Dict): COMMENTS objects, (Key: post_id - Value: Comment)
+        """
+        file_fetch = File().find_by_params({'id': file_id})
+        posts_fetch = Post().get_all({'file_id': file_id})
+        comments_fetch = {}
+        for post in posts_fetch:
+            all_comments = Comment().get_all({'post_id': post.id})
+            comments_fetch[post.id] = all_comments if all_comments else ['Sin comentarios']
+        return (file_fetch, posts_fetch, comments_fetch)

@@ -1,11 +1,11 @@
 """ KPI Module """
 
+from datetime import datetime
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for
 from blueprints.auth import login_required
 from models.file_model import File
 from models.page_model import Page
-from models.post_model import Post
-from models.comment_model import Comment
+from helpers.excel_helper import ExcelHelper
 
 kpi_bp = Blueprint('kpi', __name__, url_prefix='/kpis/pages')
 
@@ -32,17 +32,15 @@ def index(page_id = None):
 @login_required
 def analysis(file_id):
     """ Post comments kpis """
-    file_fetch = File().find_by_params({'id': file_id})
-    posts_fetch = Post().get_all({'file_id': file_id})
-    comments_fetch = {}
-    for post in posts_fetch:
-        all_comments = Comment().get_all({'post_id': post.id})
-        comments_fetch[post.id] = all_comments if all_comments else ['Sin comentarios']
+    (file_fetch, posts_fetch, comments_fetch) = ExcelHelper('').read_db_file(file_id)
+
 
     return render_template(
         'kpi/analysis.html',
+        today_date = datetime.now().strftime("%Y-%m-%d"),
         file_id = file_id,
         file_fetch = file_fetch,
         posts_fetch = posts_fetch,
         comments_fetch = comments_fetch
     )
+

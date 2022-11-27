@@ -4,8 +4,7 @@ from flask import render_template, Blueprint, flash, g, redirect, request, url_f
 from blueprints.auth import login_required
 from models.file_model import File
 from models.page_model import Page
-from models.post_model import Post
-from models.comment_model import Comment
+from helpers.excel_helper import ExcelHelper
 
 statistic_bp = Blueprint('statistic', __name__, url_prefix='/statistics/pages')
 
@@ -32,12 +31,7 @@ def index(page_id = None):
 @login_required
 def graphic(file_id):
     """ Graphics the excel data """
-    file_fetch = File().find_by_params({'id': file_id})
-    posts_fetch = Post().get_all({'file_id': file_id})
-    comments_fetch = {}
-    for post in posts_fetch:
-        all_comments = Comment().get_all({'post_id': post.id})
-        comments_fetch[post.id] = all_comments if all_comments else ['Sin comentarios']
+    (file_fetch, posts_fetch, comments_fetch) = ExcelHelper('').read_db_file(file_id)
 
     return render_template(
         'statistic/graphic.html',
