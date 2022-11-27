@@ -90,7 +90,8 @@ CREATE TABLE IF NOT EXISTS `analizador`.`page` (
     `id` 			INT 		NOT NULL AUTO_INCREMENT,
     `restaurant_id` INT 		NOT NULL,
     `name` 		    VARCHAR(45) NOT NULL,
-    `followers` 	INT 		NOT NULL DEFAULT 0,
+    `new_followers` INT 		NOT NULL DEFAULT 0,
+    `all_followers` INT 		NOT NULL DEFAULT 0,
     `created_at`    DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at`    DATETIME    NULL     DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
     `deleted_at`    DATETIME    NULL     DEFAULT NULL,
@@ -180,8 +181,8 @@ INSERT INTO restaurant (name, address, region, kind, created_by) VALUES ('Las br
 INSERT INTO restaurant (name, address, region, kind, created_by) VALUES ('Don comalon','La pasadita #414 portales','Comala','Botanero',1);
 INSERT INTO restaurant (name, address, region, kind, created_by) VALUES ('El asador de chanfaino','Piedras calientes #846 Parotales','Colima','Carnes asadas',1);
 
-INSERT INTO page (restaurant_id, name, followers, created_by) VALUES (1,'Cuaxiote', 1580,1);
-INSERT INTO page (restaurant_id, name, followers, created_by) VALUES (2,'Las brasas', 4186,1);
+INSERT INTO page (restaurant_id, name, new_followers, all_followers, created_by) VALUES (1,'Cuaxiote', 1580, 1580,1);
+INSERT INTO page (restaurant_id, name, new_followers, all_followers, created_by) VALUES (2,'Las brasas', 4186, 4186,1);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

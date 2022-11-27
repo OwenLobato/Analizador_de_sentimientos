@@ -7,12 +7,12 @@
 {% block content %}
     <form method="POST">
 
-        {% if page.name and page.followers %}
+        {% if page.name and page.all_followers >= 0 %}
             <label for="name">Nombre</label>
             <input type="text" name="name" id="name" value="{{ page.name }}" required>
 
             <label for="followers">Seguidores</label>
-            <input type="number" name="followers" id="followers" value="{{ page.followers }}" required>
+            <input type="number" name="followers" id="followers" value="{{ page.all_followers }}" required>
 
             <input type="submit" value="Actualizar">
         {% else %}

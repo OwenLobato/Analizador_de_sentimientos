@@ -9,7 +9,8 @@ class Page(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"), nullable=False)
     name = db.Column(db.String(45), nullable=False)
-    followers = db.Column(db.Integer, nullable=False, default=0)
+    all_followers = db.Column(db.Integer, nullable=False, default=0)
+    new_followers = db.Column(db.Integer, nullable=False, default=0)
     created_at = db.Column(db.DateTime, nullable=False)
     updated_at = db.Column(db.DateTime, nullable=True)
     deleted_at = db.Column(db.DateTime, nullable=True)
@@ -21,7 +22,8 @@ class Page(db.Model):
         "id",
         "restaurant_id",
         "name",
-        "followers",
+        "all_followers",
+        "new_followers",
         "created_at",
         "updated_at",
         "deleted_at",

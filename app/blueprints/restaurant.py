@@ -30,17 +30,19 @@ def page(restaurant_id):
         if page_fetch is None:
             # CREATE
             name = request.form.get('name')
-            followers = request.form.get('followers')
+            new_followers = request.form.get('followers')
+            all_followers = new_followers
             params = {
                 "restaurant_id": restaurant_id,
                 "name": name,
-                "followers": followers,
+                "new_followers": new_followers,
+                "all_followers": all_followers,
                 "created_by": g.user.id
             }
             error = None
             if not name:
                 error = "Se requiere nombre de la página"
-            elif not followers:
+            elif not all_followers:
                 error = "Se requiere la cantidad de seguidores"
 
             if error is not None:
@@ -54,16 +56,19 @@ def page(restaurant_id):
         else:
             # UPDATE
             page_fetch.name = request.form.get('name')
-            page_fetch.followers = request.form.get('followers')
+            followers = int(request.form.get('followers'))
+            page_fetch.new_followers = followers - page_fetch.all_followers
+            page_fetch.all_followers = followers
             body = {
                 "name": page_fetch.name,
-                "followers": page_fetch.followers,
+                "new_followers": page_fetch.new_followers,
+                "all_followers": page_fetch.all_followers,
                 "updated_by": g.user.id
             }
             error = None
             if not page_fetch.name:
                 error = 'Se requiere el nombre de la página de facebook del restaurante'
-            elif not page_fetch.followers:
+            elif not page_fetch.all_followers:
                 error = 'Se requiere la cantidad de seguidores de la página'
             if error is not None:
                 flash(error, 'error')
