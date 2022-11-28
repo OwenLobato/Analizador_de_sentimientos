@@ -289,6 +289,10 @@ def delete_excel(restaurant_id, file_id):
         path = os.path.join(file_fetch.path, file_fetch.name)
         ExcelHelper(file_fetch.path + file_fetch.name).delete_excel_data(restaurant_id, file_id)
         os.remove(path)
+        # Delete wordcloud image if exist
+        wc_path = f"static/uploads/{file_fetch.name.split('.')[0]}.png"
+        if os.path.exists(wc_path):
+            os.remove(wc_path)
         msj = 'Archivo borrado correctamente'
         status = 'success'
     flash(msj, status)
