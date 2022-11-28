@@ -13,6 +13,10 @@
         </header>
     </article>
 
+    <div class="img_wc">
+        <img src="{{url_for('static', filename=wordcloud_path)}}"/>
+    </div>
+
     {% for post in posts_fetch %}
         <p>***********************</p>
         <p>{{ post }}</p>
