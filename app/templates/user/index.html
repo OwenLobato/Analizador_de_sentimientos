@@ -10,12 +10,42 @@
         <article>
             <header>
                 <div>
-                    <h1>{{ user.name }}</h1>
+                    <h1 id="h1">{{user.name}}</h1>
                 </div>
                 <div>
                     {% if g.user %}
                         <a href="{{ url_for('user.update', user_id=user.id) }}">Actualizar</a>
-                        <a href="{{ url_for('user.deactive', user_id=user.id) }}">Desactivar</a>
+                        <a class="btn_desactivar" onclick="showDeactiveModal(this)" idUser="{{ user.id }}">Desactivar</a>
+                         <!--<a id="elimina" style="color: white; text-decoration:none;" href="{{ url_for('user.deactive', user_id=user.id) }}">Desactivar</a>-->
+
+                          <!-- The Modal -->
+                        <div style="z-index: 100; margin-top:15%;" class="modal" id="myModal_{{ user.id }}">
+                            <div class="modal-dialog ">
+                            <div class="modal-content" style="background-color:rgba(255,255,255,10); width: 70%;">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                <h4 class="modal-title text-danger">ADVERTENCIA!!</h4>
+                    
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="alert alert-warning" role="alert">
+                                        ESTA SEGURO QUE DESEA DESACTIVAR EL USUARIO
+                                    </div>
+                            
+                        
+                                <!-- Modal footer -->
+                                <div class="container-fluid">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
+                                    <a type="button" class="btn btn-primary" data-bs-dismiss="modal" id="elimina" style="color: white; text-decoration:none;" href="{{ url_for('user.deactive', user_id=user.id) }}">SI</a>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
                     {% endif %}
                 </div>
             </header>
@@ -23,5 +53,25 @@
                 <p></p>
             </div>
         </article>
+
+       
+        
     {% endfor %}
+
+    <script>
+        function showDeactiveModal(element) {
+            let idModal = `#myModal_${$(element).attr('idUser')}`;
+            console.log(idModal);
+            $(idModal).show().draggable();
+            $('.btn-close,.btn-danger').click(function(){
+                $(idModal).hide(); 
+            });
+            $('.btn-primary').click(function(){
+              console.log($("#elimina").val()); 
+              $(idModal).hide(); 
+
+            });
+            
+        }
+    </script>
 {% endblock %}
