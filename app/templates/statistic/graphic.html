@@ -12,43 +12,43 @@
             </div>
         </header>
     </article>
+{% endblock %}
 
-    <div class="row">
-
-        <div id='objeto' class='col-sm-6'>
-            <div><span><h4>Grafica 1:</h4></span></div>
-            <canvas id="myChart"  style="max-width: 500px; max-height: 500px;"></canvas>
+{% block auxblock %}
+    <div class="container-fluid"style='margin-left:10%; z-index: 10000;'>
+        <div class='row col-ms-12 mx-auto' style="display: flex; margin: left -50px !important;;">
+            <div id='objeto' style='max-width: 40%; margin-right: 1%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4 bg-body rounded shadow-sm'>
+                <div><span><h4>Grafica 1: Total de publicaciones por mes</h4></span></div>
+                <canvas id="myChart" ></canvas>
+            </div>
+            <div id='objeto'  style='max-width: 40%; margin-left: 1%;'  class='col-sm-6 mb-2 mt-4 bg-body rounded shadow-sm'>
+                <div><span><h4>Grafica 2: Volumen de publicaciones</h4></span></div>
+                <canvas id="myChart1"></canvas> 
+            </div>
+            <div id='objeto' style='max-width: 40%; margin-right: 1%;  margin-left: 0%;' class='col-sm-6 pt-5 mb-2 mt-3  bg-body rounded shadow-sm'>
+                <div><span><h4>Grafica 3: Top 10 horas de mayor pulicación</h4></span></div>
+                <canvas id="myChart3" ></canvas> 
+            </div>
+            <div id='objeto' style='max-width: 40%; margin-left: 1%; ' class='col-sm-6 mb-2 mt-3 ml-3 bg-body rounded shadow-sm'>
+                <div><span><h4>Grafica 4: Año más viral</h4></span></div>
+                <canvas id="myChart4"></canvas> 
+            </div>
         </div>
-
-        <div id='objeto' class='col-sm-6'>
-            <div><span><h4>Grafica 2:</h4></span></div>
-            <canvas id="myChart1"  style="max-width: 500px; max-height: 500px; margin-left: 0px;"></canvas> 
-        </div>
-
-        <div id='objeto' class='col-sm-6'>
-            <div><span><h4>Grafica 3:</h4></span></div>
-            <canvas id="myChart3"  style="max-width: 500px; max-height: 500px; margin-left: 0px;"></canvas> 
-        </div>
-
-        <div id='objeto' class='col-sm-6'>
-            <div><span><h4>Grafica 4:</h4></span></div>
-            <canvas id="myChart4"  style="max-width: 500px; max-height: 500px; margin-left: 0px;"></canvas> 
-        </div>
+    </div>
 
         {% for post in posts_fetch %}
-            <p>***********************</p>
-            <p>{{ post }}</p>
+            <p class="compartido" compartido="{{ post.share }}" hidden></p>
+            <p class="fecha" fecha="{{ post.created_date }}" hidden></p>
+            <p class="tiempo" hora="{{ post.created_time }} " hidden></p>
+
             {% for comment in comments_fetch[post.id] %}
-                <p>{{ comment }}</p>
+
             {% endfor %}
         {% endfor %} 
-
-    </div>
 
     <!-- JavaScript graphics logic -->
     <script>
         {% include 'statistic/graphic.js' %}
     </script>
-
 
 {% endblock %}
