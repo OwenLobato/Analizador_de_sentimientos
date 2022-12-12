@@ -10,6 +10,8 @@ var ctx9 = document.getElementById("myChart9").getContext("2d");
 var ctx10 = document.getElementById("myChart10").getContext("2d");
 var ctx11 = document.getElementById("myChart11").getContext("2d");
 var ctx12 = document.getElementById("myChart12").getContext("2d");
+var ctx13 = document.getElementById("myChart13").getContext("2d");
+
 
 let sentimientos01 = [];
 let sentimientos02 = [];
@@ -23,6 +25,21 @@ let sentimientos09 = [];
 let sentimientos10 = [];
 let sentimientos11 = [];
 let sentimientos12 = [];
+
+
+let genero_h=[];
+let genero_m=[];
+let genero_e=[];
+
+let res=[];
+let res2=[];
+let res3=[];
+
+
+var repetidos={};
+var repetidos2={};
+var repetidos3={};
+
 
 let feeling = [];
 let meses= [];
@@ -39,6 +56,37 @@ num_neutro=0;
 var year="";
 let valida_mes="0";
 let clase_sentimiento = $(".sentimiento");
+let gen = $(".genero");
+
+gen.map((id,genero) =>{
+
+    let tipo_genero=$(genero).attr("hym")
+    
+    if(tipo_genero=="H"){
+        genero_h.push(tipo_genero);
+    }else if(tipo_genero=="M"){
+        genero_m.push(tipo_genero);
+    }else if(tipo_genero=="E"){
+        genero_e.push(tipo_genero);
+    }
+});
+
+ genero_h.forEach(function(numero){
+    repetidos[numero] = (repetidos[numero] || 0) + 1;
+});
+
+genero_m.forEach(function(numero){
+    repetidos2[numero] = (repetidos2[numero] || 0) + 1;
+});
+
+genero_e.forEach(function(numero){
+    repetidos3[numero] = (repetidos3[numero] || 0) + 1;
+});
+
+ res1=Object.values(repetidos) //array que recibe objeto con horas y las veces que se repiten
+ res2=Object.values(repetidos2)
+ res3=Object.values(repetidos3)
+
 
 clase_sentimiento.map((id,sentimiento) =>{
     let valor=$(sentimiento).attr("valor")
@@ -545,6 +593,36 @@ var myChart12= new Chart(ctx12,{
         datasets:[{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
+            backgroundColor:[
+                'rgb(78, 151, 44)',
+                'rgb(151, 44, 89)',
+                'rgb(44, 94, 151)',
+    
+            ]
+        }]
+    },
+    optionss:{
+        scales:{
+            yAxes:[{
+                ticks:{
+                    beginAtZero:true
+                }
+            }]
+        } 
+    }
+});
+
+
+/*******************************Grafica 13*********************************************************************** */
+
+
+var myChart13= new Chart(ctx13,{
+    type: "pie",
+    data:{
+        labels:["Hombres","Mujeres","Empresas"],
+        datasets:[{
+            label:'Num datos',
+            data:[res1,res2,res3],
             backgroundColor:[
                 'rgb(78, 151, 44)',
                 'rgb(151, 44, 89)',

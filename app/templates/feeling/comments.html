@@ -18,55 +18,65 @@
     </div>
     <div class="container-fluid"style='margin-left:1%; z-index: 10000;'>
         <div class='row col-ms-12 mx-auto' style="display: flex; margin: left -50px !important;;">
+            <div id='objeto' style='max-width: 70%; margin-right: 0%;  margin-left: 12%;'class='col-sm-12  mb-2 mt-4  bg-body rounded shadow-sm'>
+                <div><span><h4>Grafica 1: Historico de generos activos</h4></span></div>
+                <canvas id="myChart13" ></canvas>
+            </div>
+        </div>
+        <div class='row col-ms-12 mx-auto' style="display: flex; margin: left -50px !important;;">
+
+         
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 1: Sentimientos en el mes de Enero</h4></span></div>
+                <div><span><h4>Grafica 2: Sentimientos en el mes de Enero</h4></span></div>
                 <canvas id="myChart1" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 2: Sentimientos en el mes de Febrero</h4></span></div>
+                <div><span><h4>Grafica 3: Sentimientos en el mes de Febrero</h4></span></div>
                 <canvas id="myChart2" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 3: Sentimientos en el mes de Marzo</h4></span></div>
+                <div><span><h4>Grafica 4: Sentimientos en el mes de Marzo</h4></span></div>
                 <canvas id="myChart3" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 4: Sentimientos en el mes de Abril</h4></span></div>
+                <div><span><h4>Grafica 5: Sentimientos en el mes de Abril</h4></span></div>
                 <canvas id="myChart4" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 5: Sentimientos en el mes de Mayo</h4></span></div>
+                <div><span><h4>Grafica 6: Sentimientos en el mes de Mayo</h4></span></div>
                 <canvas id="myChart5" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 6: Sentimientos en el mes de Junio</h4></span></div>
+                <div><span><h4>Grafica 7: Sentimientos en el mes de Junio</h4></span></div>
                 <canvas id="myChart6" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 7: Sentimientos en el mes de Julio</h4></span></div>
+                <div><span><h4>Grafica 8: Sentimientos en el mes de Julio</h4></span></div>
                 <canvas id="myChart7" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 8: Sentimientos en el mes de Agosto</h4></span></div>
+                <div><span><h4>Grafica 9: Sentimientos en el mes de Agosto</h4></span></div>
                 <canvas id="myChart8" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 9: Sentimientos en el mes de Septiembre</h4></span></div>
+                <div><span><h4>Grafica 10: Sentimientos en el mes de Septiembre</h4></span></div>
                 <canvas id="myChart9" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 10: Sentimientos en el mes de Octubre</h4></span></div>
+                <div><span><h4>Grafica 11: Sentimientos en el mes de Octubre</h4></span></div>
                 <canvas id="myChart10" ></canvas>
             </div>
          
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 11: Sentimientos en el mes de Noviembre</h4></span></div>
+                <div><span><h4>Grafica 12: Sentimientos en el mes de Noviembre</h4></span></div>
                 <canvas id="myChart11" ></canvas>
             </div>
             <div id='objeto' style='max-width: 48%; margin-right: 2%;  margin-left: 0%;'class='col-sm-6  mb-2 mt-4  bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 12: Sentimientos en el mes de Diciembre</h4></span></div>
+                <div><span><h4>Grafica 13: Sentimientos en el mes de Diciembre</h4></span></div>
                 <canvas id="myChart12" ></canvas>
             </div>
+
+            
     </div>
     </div>
     
@@ -75,6 +85,7 @@
  
         {% for comment in comments_fetch[post.id] %}
             <p class="sentimiento" valor="{{ comment.feeling }}" fecha="{{ comment.created_date }}" hidden></p>
+            <p class="genero"   hym="{{ comment.gender}}" hidden></p>
 
         {% endfor %}
     {% endfor %} 
