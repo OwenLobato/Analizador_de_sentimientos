@@ -18,7 +18,38 @@
                     {% if g.user %}
                         <a href="{{ url_for('restaurant.upload', restaurant_id=restaurant.id) }}">Cargar datos</a>
                         <a href="{{ url_for('restaurant.update', restaurant_id=restaurant.id) }}">Actualizar</a>
-                        <a href="{{ url_for('restaurant.deactive', restaurant_id=restaurant.id) }}">Desactivar</a>
+                        <a class="btn_desactivar" onclick="showDeactiveModal(this)" idRestaurant="{{ restaurant.id }}">Desactivar</a>
+
+                         <!-- The Modal -->
+                         <div style="z-index: 100; margin-top:15%;" class="modal" id="myModal_{{ restaurant.id }}">
+                            <div class="modal-dialog ">
+                            <div class="modal-content" style="background-color:rgba(255,255,255,10); width: 70%;">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                <h4 class="modal-title text-danger">ADVERTENCIA!!</h4>
+                    
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="alert alert-warning" role="alert">
+                                        ESTA SEGURO QUE DESEA DESACTIVAR EL Restaurante
+                                    </div>
+                        
+                                <!-- Modal footer -->
+                                <div class="container-fluid">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NO</button>
+                                    <a id="elimina" class="btn btn-primary" data-bs-dismiss="modal" style="color: white; text-decoration:none;" href="{{ url_for('restaurant.deactive', restaurant_id=restaurant.id) }}">SI</a>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        
+
+
                     {% endif %}
                 </div>
             </header>
@@ -27,4 +58,22 @@
             </div>
         </article>
     {% endfor %}
+
+    <script>
+        function showDeactiveModal(element) {
+            let idRestaurant = $(element).attr('idRestaurant');
+            let idModal = `#myModal_${idRestaurant}`;
+            console.log(idModal);
+            $(idModal).show().draggable();
+            $('.btn-close,.btn-danger').click(function(){
+                $(idModal).hide(); 
+            });
+            $('.btn-primary').click(function(){
+              console.log($("#elimina").val()); 
+              $(idModal).hide(); 
+
+            });   
+        }
+    </script>
 {% endblock %}
+
