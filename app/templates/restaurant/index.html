@@ -20,10 +20,12 @@
                         <a href="{{ url_for('restaurant.update', restaurant_id=restaurant.id) }}">Actualizar</a>
                         <a href="{{ url_for('restaurant.deactive', restaurant_id=restaurant.id) }}">Desactivar</a>
                     {% endif %}
+                    
                 </div>
             </header>
             <div>
                 <p>{{ restaurant.address }}</p>
+
             </div>
         </article>
     {% endfor %}
