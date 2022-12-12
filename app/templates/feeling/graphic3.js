@@ -163,9 +163,9 @@ var myChart= new Chart(ctx,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(122, 151, 44)',
-                'rgb(78, 151, 44)',
-                'rgb(44, 151, 58)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -203,9 +203,9 @@ var myChart2= new Chart(ctx2,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(44, 151, 97)',
-                'rgb(44, 151, 137)',
-                'rgb(44, 130, 151)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -243,9 +243,9 @@ var myChart3 = new Chart(ctx3,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(151, 51, 44)',
-                'rgb(151, 83, 44)',
-                'rgb(151, 131, 44)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -283,10 +283,9 @@ var myChart4= new Chart(ctx4,{
             label:'Num datos',
             data:[num_positivo,num_negativo,num_neutro],
             backgroundColor:[
-                'rgb(44, 94, 151)',
-                'rgb(55, 44, 151)',
-                'rgb(99, 44, 151)',
-    
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -323,10 +322,9 @@ var myChart5= new Chart(ctx5,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(138, 44, 151)',
-                'rgb(151, 44, 133)',
-                'rgb(151, 44, 89)',
-    
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -363,8 +361,9 @@ var myChart6= new Chart(ctx6,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(66, 134, 244,0.5)',
-                'rgb(74, 135, 72,0.5)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -399,9 +398,9 @@ var myChart7= new Chart(ctx7,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(44, 151, 97)',
-                'rgb(44, 151, 137)',
-                'rgb(44, 130, 151)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -435,9 +434,9 @@ var myChart8= new Chart(ctx8,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(44, 151, 58)',
-                'rgb(44, 151, 97)',
-                'rgb(44, 151, 137)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -471,9 +470,9 @@ var myChart9 = new Chart(ctx9,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(44, 94, 151)',
-                'rgb(99, 44, 151)',
-                'rgb(151, 83, 44)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -507,9 +506,9 @@ var myChart10= new Chart(ctx10,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(78, 151, 44)',
-                'rgb(151, 44, 44)',
-                'rgb(99, 44, 151)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -543,9 +542,9 @@ var myChart11 = new Chart(ctx11,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(78, 151, 44)',
-                'rgb(138, 44, 151)',
-                'rgb(151, 44, 133)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -579,9 +578,9 @@ var myChart12= new Chart(ctx12,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-                'rgb(78, 151, 44)',
-                'rgb(151, 44, 89)',
-                'rgb(44, 94, 151)',
+                'rgb(255, 0, 0)',
+                'rgb(0, 255, 0)',
+                'rgb(255, 255, 0)'
             ]
         }]
     },
@@ -596,10 +595,7 @@ var myChart12= new Chart(ctx12,{
     }
 });
 
-
 /*******************************Grafica 13*********************************************************************** */
-
-
 var myChart13= new Chart(ctx13,{
     type: "pie",
     data:{
@@ -608,9 +604,9 @@ var myChart13= new Chart(ctx13,{
             label:'Num datos',
             data:[res1,res2,res3],
             backgroundColor:[
-                'rgb(78, 151, 44)',
-                'rgb(151, 44, 89)',
-                'rgb(44, 94, 151)',
+                'rgb(30,144,255)',
+                'rgb(255, 0, 212)',
+                'rgb(139, 139, 139)',
             ]
         }]
     },
