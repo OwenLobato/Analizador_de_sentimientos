@@ -33,7 +33,7 @@ def index(page_id = None):
 def analysis(file_id):
     """ Post comments kpis """
     (file_fetch, posts_fetch, comments_fetch) = ExcelHelper('').read_db_file(file_id)
-    (growth_rate, post_reach, applause_rate, avg_engagement_rate, amplification_rate, virality_rate) = __get_kips()
+    (growth_rate, post_reach, applause_rate, avg_engagement_rate, amplification_rate, comment_conversation_rate) = __get_kips(file_id)
     if request.method == 'POST':
         start_date = request.form.get('start_date')
         finish_date = request.form.get('finish_date')
@@ -54,47 +54,59 @@ def analysis(file_id):
         applause_rate = applause_rate,
         avg_engagement_rate = avg_engagement_rate,
         amplification_rate = amplification_rate,
-        virality_rate = virality_rate
+        comment_conversation_rate = comment_conversation_rate
     )
 
 # Get KPIs functions
 
-def __get_kpi_growth_rate():
-    growth_rate = 1
+def __get_kpi_growth_rate(page):
+    new_followers = page.new_followers
+    all_followers = page.all_followers
+    growth_rate = (new_followers/all_followers) * 100
     return growth_rate
 
-def __get_kpi_post_reach():
-    post_reach = 2
+def __get_kpi_post_reach(page, posts):
+    # all_followers = page.all_followers
+    # posts = len(posts)
+    post_reach = 20
     return post_reach
 
-def __get_kpi_applause_rate():
-    applause_rate = 3
+def __get_kpi_applause_rate(page, posts):
+    all_followers = page.all_followers
+    posts_likes = []
+    for post in posts:
+        posts_likes.append(post.like)
+    likes = max(posts_likes)
+    applause_rate = (likes / all_followers) * 100
     return applause_rate
 
 def __get_kpi_avg_engagement_rate():
-    avg_engagement_rate = 4
+    avg_engagement_rate = 40
     return avg_engagement_rate
 
 def __get_kpi_amplification_rate():
-    amplification_rate = 5
+    amplification_rate = 50
     return amplification_rate
 
-def __get_kpi_virality_rate():
-    virality_rate = 6
-    return virality_rate
+def __get_kpi_comment_conversation_rate():
+    comment_conversation_rate = 60
+    return comment_conversation_rate
 
-def __get_kips():
-    growth_rate = __get_kpi_growth_rate()
-    post_reach = __get_kpi_post_reach()
-    applause_rate = __get_kpi_applause_rate()
+def __get_kips(file_id):
+    file = File().find_by_params({'id': file_id})
+    page = Page().find_by_params({'id': file.page_id})
+    posts = Post().get_all({'file_id': file_id})
+    growth_rate = __get_kpi_growth_rate(page)
+    post_reach = __get_kpi_post_reach(page, posts)
+    applause_rate = __get_kpi_applause_rate(page, posts)
     avg_engagement_rate = __get_kpi_avg_engagement_rate()
     amplification_rate = __get_kpi_amplification_rate()
-    virality_rate = __get_kpi_virality_rate()
+    comment_conversation_rate = __get_kpi_comment_conversation_rate()
     return (
         growth_rate,
         post_reach,
         applause_rate,
         avg_engagement_rate,
         amplification_rate,
-        virality_rate
+        comment_conversation_rate
     )
