@@ -73,6 +73,19 @@ body{
     border-bottom: 1px solid;
 }
 
+/* ---------------- INSTRUCTIONS ---------------- */
+.instructions{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.i_posts{
+    max-width: 50%;
+}
+.i_comments{
+    max-width: 50%;
+}
+
 /* ---------------- FLASH MESSAGES ---------------- */
 .error{
     display: flex;

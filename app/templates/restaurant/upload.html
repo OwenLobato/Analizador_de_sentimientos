@@ -8,6 +8,41 @@
 
 {% block content %}
 
+<h4>Columnas necesarias del archivo:</h4>
+<div class="instructions">
+        <div class="i_posts">
+            <p class="bg-secondary text-white">Hoja 1 "POSTS"</p>
+            <ol>
+                <li>created_date</li>
+                <li>created_time</li>
+                <li>message</li>
+                <li>classification</li>
+                <li>format</li>
+                <li>post_id</li>
+                <li>react_angry</li>
+                <li>react_haha</li>
+                <li>react_like</li>
+                <li>react_love</li>
+                <li>react_sad</li>
+                <li>react_wow</li>
+                <li>react_care</li>
+                <li>share</li>
+            </ol>
+        </div>
+        <div class="i_comments">
+            <p class="bg-secondary text-white">Hoja 2 "COMMENTS"</p>
+            <ol>
+                <li>post_id</li>
+                <li>created_date</li>
+                <li>created_time</li>
+                <li>from_name</li>
+                <li>message</li>
+                <li>gender</li>
+                <li>reactions</li>
+            </ol>
+        </div>
+    </div>
+
     {% if page_fetch %}
         <form method="POST" enctype="multipart/form-data">
 
