@@ -25,56 +25,47 @@
 
     </form>
 
-    <div class='row col-ms-12 mx-3'>
+    <div class='row col-ms-12 mx-3 text-center'>
+        <h2>Alcance</h2>
         <div class='row col-ms-12 mx-3'>
             <div id='objeto'  style='max-width: 49%; margin-left: 1%;'  class='col-sm-6 mb-2 mt-4 bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 2: alcance de las publicaciones</h4></span></div>
+                <div><span><h4>Tasa de crecimiento de la audiencia</h4><p>(Nuevos seguidores / Total de seguidores) * 100 = {{ growth_rate }} </p></span></div>
                 <canvas id="myChart1"></canvas> 
             </div>
+
             <div id='objeto'  style='max-width: 49%; margin-left: 1%;'  class='col-sm-6 mb-2 mt-4 bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 2: alcance de las publicaciones</h4></span></div>
+                <div><span><h4>Alcance de la publicación</h4><p>(Vistas de la publicacion / Total de seguidores) * 100 = {{ post_reach }} </p></span></div>
                 <canvas id="myChart2"></canvas> 
             </div>  
         </div>
+
+        <h2>Interaccion</h2>
         <div class='row col-ms-12 mx-3'>
             <div id='objeto'  style='max-width: 49%; margin-left: 1%;'  class='col-sm-6 mb-2 mt-4 bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 2: alcance de las publicaciones</h4></span></div>
+                <div><span><h4>Tasa de aplauso</h4><p>(Likes / Seguidores) * 100 = {{ applause_rate }} </p></span></div>
                 <canvas id="myChart3"></canvas> 
             </div>
             <div id='objeto'  style='max-width: 49%; margin-left: 1%;'  class='col-sm-6 mb-2 mt-4 bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 2: alcance de las publicaciones</h4></span></div>
+                <div><span><h4>Tasa de interacción promedio</h4><p>(Likes + Comentarios + Compartidas / Total de seguidores) * 100 = {{ avg_engagement_rate }} </p></span></div>
                 <canvas id="myChart4"></canvas> 
             </div>
             <div id='objeto'  style='max-width: 49%; margin-left: 1%;'  class='col-sm-6 mb-2 mt-4 bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 2: alcance de las publicaciones</h4></span></div>
+                <div><span><h4>Tasa de amplificación</h4></span><p>(Compartidas / Total de seguidores) * 100 = {{ amplification_rate }} </p></div>
                 <canvas id="myChart5"></canvas> 
             </div>
             <div id='objeto'  style='max-width: 49%; margin-left: 1%;'  class='col-sm-6 mb-2 mt-4 bg-body rounded shadow-sm'>
-                <div><span><h4>Grafica 2: alcance de las publicaciones</h4></span></div>
+                <div><span><h4>Tasa de conversión de redes sociales</h4></span><p>(Comentarios / Total de seguidores) * 100 = {{ comment_conversation_rate }} </p></div>
                 <canvas id="myChart6"></canvas> 
             </div>
         </div>   
     </div>
 
-    <div>
-    <h2>Alcance</h2>
-        <h5>Tasa de crecimiento de la audiencia</h5>
-            <p>(Nuevos seguidores / Total de seguidores) * 100 = {{ growth_rate }} </p>
-        <h5>Alcance de la publicación</h5>
-            <p>(Vistas de la publicacion / Total de seguidores) * 100 = {{ post_reach }} </p>
-
-    <br><br>
-
-    <h2>Interaccion</h2>
-        <h5>Tasa de aplauso</h5>
-            <p>(Likes / Seguidores) * 100 = {{ applause_rate }} </p>
-        <h5>Tasa de interacción promedio</h5>
-            <p>(Likes + Comentarios + Compartidas / Total de seguidores) * 100 = {{ avg_engagement_rate }} </p>
-        <h5>Tasa de amplificación</h5>
-            <p>(Compartidas / Total de seguidores) * 100 = {{ amplification_rate }} </p>
-        <h5>Tasa de viralidad</h5>
-            <p>(Nuevos seguidores / Total de seguidores) * 100 = {{ virality_rate }} </p>
-    </div>
+    <p class="growth_rate" hidden>{{ growth_rate }}</p>
+    <p class="post_reach" hidden>{{ post_reach }}</p>
+    <p class="applause_rate" hidden>{{ applause_rate }}</p>
+    <p class="avg_engagement_rate" hidden>{{ avg_engagement_rate }}</p>
+    <p class="amplification_rate" hidden>{{ amplification_rate }}</p>
+    <p class="comment_conversation_rate" hidden>{{ comment_conversation_rate }}</p>
 
     <script>
         {% include 'kpi/graphic2.js' %}

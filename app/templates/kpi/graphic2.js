@@ -1,10 +1,24 @@
 var ctx1 = document.getElementById("myChart1").getContext("2d");
 var ctx2 = document.getElementById("myChart2").getContext("2d");
-
 var ctx3 = document.getElementById("myChart3").getContext("2d");
 var ctx4 = document.getElementById("myChart4").getContext("2d");
 var ctx5 = document.getElementById("myChart5").getContext("2d");
 var ctx6 = document.getElementById("myChart6").getContext("2d");
+
+/* --------------- KPIS VALUES ---------------  */
+let growth_rate = $(".growth_rate").text();
+let post_reach = $(".post_reach").text();
+let applause_rate = $(".applause_rate").text();
+let avg_engagement_rate = $(".avg_engagement_rate").text();
+let amplification_rate = $(".amplification_rate").text();
+let comment_conversation_rate = $(".comment_conversation_rate").text();
+
+console.log(growth_rate);
+console.log(post_reach);
+console.log(applause_rate);
+console.log(avg_engagement_rate);
+console.log(amplification_rate);
+console.log(comment_conversation_rate);
 
 /*******************************para las fechas*********************************************/
 
@@ -12,14 +26,12 @@ var ctx6 = document.getElementById("myChart6").getContext("2d");
 var myChart= new Chart(ctx1,{
     type: "pie",
     data:{
-        labels:['Volumen total año 2021','Volumen total año 2022'],
+        labels:['Porcentaje'],
         datasets:[{
             label:'Num datos',
-            data:[1,23,4],
+            data:[growth_rate,(100-growth_rate)],
             backgroundColor:[
-                'rgb(66, 134, 244,0.5)',
-                'rgb(74, 135, 72,0.5)',
-    
+                'rgb(66, 134, 244,0.5)'
             ]
         }]
     },
@@ -38,14 +50,12 @@ var myChart= new Chart(ctx1,{
 var myChart2= new Chart(ctx2,{
     type: "pie",
     data:{
-        labels:['Volumen total año 2021','Volumen total año 2022'],
+        labels:['Porcentaje'],
         datasets:[{
             label:'Num datos',
-            data:[1,23,4],
+            data:[post_reach,(100-post_reach)],
             backgroundColor:[
-                'rgb(66, 134, 244,0.5)',
-                'rgb(74, 135, 72,0.5)',
-    
+                'rgb(66, 134, 244,0.5)'
             ]
         }]
     },
@@ -64,14 +74,12 @@ var myChart2= new Chart(ctx2,{
 var myChart3= new Chart(ctx3,{
     type: "pie",
     data:{
-        labels:['Volumen total año 2021','Volumen total año 2022'],
+        labels:['Porcentaje'],
         datasets:[{
             label:'Num datos',
-            data:[1,23,4],
+            data:[applause_rate,(100-applause_rate)],
             backgroundColor:[
-                'rgb(66, 134, 244,0.5)',
-                'rgb(74, 135, 72,0.5)',
-    
+                'rgb(66, 134, 244,0.5)'
             ]
         }]
     },
@@ -90,14 +98,12 @@ var myChart3= new Chart(ctx3,{
 var myChart4= new Chart(ctx4,{
     type: "pie",
     data:{
-        labels:['Volumen total año 2021','Volumen total año 2022'],
+        labels:['Porcentaje'],
         datasets:[{
             label:'Num datos',
-            data:[1,23,4],
+            data:[avg_engagement_rate,(100-avg_engagement_rate)],
             backgroundColor:[
-                'rgb(66, 134, 244,0.5)',
-                'rgb(74, 135, 72,0.5)',
-    
+                'rgb(66, 134, 244,0.5)'
             ]
         }]
     },
@@ -116,14 +122,12 @@ var myChart4= new Chart(ctx4,{
 var myChart5= new Chart(ctx5,{
     type: "pie",
     data:{
-        labels:['Volumen total año 2021','Volumen total año 2022'],
+        labels:['Porcentaje'],
         datasets:[{
             label:'Num datos',
-            data:[1,23,4],
+            data:[amplification_rate,(100-amplification_rate)],
             backgroundColor:[
-                'rgb(66, 134, 244,0.5)',
-                'rgb(74, 135, 72,0.5)',
-    
+                'rgb(66, 134, 244,0.5)'
             ]
         }]
     },
@@ -142,14 +146,12 @@ var myChart5= new Chart(ctx5,{
 var myChart6= new Chart(ctx6,{
     type: "pie",
     data:{
-        labels:['Volumen total año 2021','Volumen total año 2022'],
+        labels:['Porcentaje'],
         datasets:[{
             label:'Num datos',
-            data:[1,23,4],
+            data:[comment_conversation_rate,(100-comment_conversation_rate)],
             backgroundColor:[
-                'rgb(66, 134, 244,0.5)',
-                'rgb(74, 135, 72,0.5)',
-    
+                'rgb(66, 134, 244,0.5)'
             ]
         }]
     },

@@ -19,7 +19,7 @@
             </select>
 
             <input type="submit" value="Buscar datos">
-        
+
         </form>
         {% if excel_files %}
             <h2 class="text-primary pt-5 mb-3">Datos de '{{ page_fetch.name }}' cargados previamente:</h2>
@@ -39,8 +39,4 @@
             <h2 class="text-danger text-center pt-5 mb-3">No hay datos registrados de '{{ page_fetch.name }}'</h2>
         {% endif %}
     {% endif %}
-
-
-  
-
 {% endblock %}
