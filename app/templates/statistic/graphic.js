@@ -80,10 +80,9 @@ fechas.map((id, fecha) =>{
     let año =$(fecha).attr("fecha").split("-")[0];
     arr_year.push(año);
 
-     if (año == valor_year) {
+    if (año == valor_year) {
         arr_year21.push(año);
     } 
-       
     if (año == valor_year2) {
         arr_year22.push(año);
     } 
@@ -99,7 +98,7 @@ fechas.map((id, fecha) =>{
         fechas02.push(mes)
         lengthFE  = fechas02.length;
     }    
-     if (año == valor_year && mes == '03') {
+    if (año == valor_year && mes == '03') {
         fechas03.push(mes)
         lengthMAR  = fechas03.length;
     }
@@ -157,7 +156,7 @@ fechas.map((id, fecha) =>{
         fechas022.push(mes)
         lengthFE2  = fechas022.length;
     }    
-     if (año == valor_year && mes == '03') {
+    if (año == valor_year && mes == '03') {
         fechas032.push(mes)
         lengthMAR2  = fechas032.length;
     }
@@ -205,7 +204,6 @@ fechas.map((id, fecha) =>{
         lengthDIC2 = fechas122.length;
     }
 
-
 });
 
 año2021+=lengthEN+lengthFE+lengthMAR+lengthA+lengthMAY+lengthJ+lengthJUL+lengthAG+lengthSE+lengthOC+lengthNOV+lengtDIC;
@@ -226,7 +224,6 @@ horas.map((id, tiempo) =>{
     hora = $(tiempo).attr("hora").split(":")[0];
     horasrep.push(hora);
 });
-
 
 //sca las horas repetidas 
 horasrep.forEach(function(numero){
@@ -252,13 +249,13 @@ horas_usadas.push(sortable[i][0]);
 
  //se ordena de + a -
 function comparar(a,b){return a - b}
- res.sort(comparar);
+res.sort(comparar);
+res.reverse();
 
- res.reverse();
- //se obtiene las primeras 10 horas repetidas de cada publicacion guardadas en res
- for(i=0;i<=10;i++){
+//se obtiene las primeras 10 horas repetidas de cada publicacion guardadas en res
+for(i=0;i<=10;i++){
     res2.push(res[i]);
- }
+}
 
 /*******************************CODIGO PARA LOS SHARES*********************************************/
 let compartido = $(".compartido")
@@ -348,23 +345,23 @@ var myChart3= new Chart(ctx3,{
             label:"",
             data:res2,
             backgroundColor:[
-                 'rgb(78, 151, 44)',
-                 'rgb(151, 83, 44)',
-                 'rgb(151, 131, 44)',
-                 'rgb(122, 151, 44)',
-                 'rgb(78, 151, 44)',
-                 'rgb(44, 151, 58)',
-                 'rgb(44, 151, 97)',
-                 'rgb(44, 151, 137)',
-                 'rgb(44, 130, 151)',
-                 'rgb(44, 94, 151)',
-                 'rgb(55, 44, 151)',
-                 'rgb(99, 44, 151)',
-                 'rgb(138, 44, 151)',
-                 'rgb(151, 44, 133)',
-                 'rgb(151, 44, 89)',
-                 'rgb(151, 44, 44)',
-                ]
+                'rgb(78, 151, 44)',
+                'rgb(151, 83, 44)',
+                'rgb(151, 131, 44)',
+                'rgb(122, 151, 44)',
+                'rgb(78, 151, 44)',
+                'rgb(44, 151, 58)',
+                'rgb(44, 151, 97)',
+                'rgb(44, 151, 137)',
+                'rgb(44, 130, 151)',
+                'rgb(44, 94, 151)',
+                'rgb(55, 44, 151)',
+                'rgb(99, 44, 151)',
+                'rgb(138, 44, 151)',
+                'rgb(151, 44, 133)',
+                'rgb(151, 44, 89)',
+                'rgb(151, 44, 44)',
+            ]
         }]
     },
     optionss:{
@@ -385,19 +382,17 @@ var barColors = ["green","blue"]
 var myChart4= new Chart(ctx4,{ 
     type: "bar",
     data: {
-      labels: xValues,
-      datasets: [{
-        backgroundColor: barColors,
-        data: yValues
-      }]
+        labels: xValues,
+        datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+        }]
     },
     options: {
-      legend: {display: false},
-      title: {
-        display: true,
-        text: "AÑO MÁS VIRAL"
-      }
+        legend: {display: false},
+        title: {
+            display: true,
+            text: "AÑO MÁS VIRAL"
+        }
     }
-       
-
 });

@@ -71,7 +71,7 @@ gen.map((id,genero) =>{
     }
 });
 
- genero_h.forEach(function(numero){
+genero_h.forEach(function(numero){
     repetidos[numero] = (repetidos[numero] || 0) + 1;
 });
 
@@ -83,19 +83,19 @@ genero_e.forEach(function(numero){
     repetidos3[numero] = (repetidos3[numero] || 0) + 1;
 });
 
- res1=Object.values(repetidos) //array que recibe objeto con horas y las veces que se repiten
- res2=Object.values(repetidos2)
- res3=Object.values(repetidos3)
+res1=Object.values(repetidos) //array que recibe objeto con horas y las veces que se repiten
+res2=Object.values(repetidos2)
+res3=Object.values(repetidos3)
 
 
 clase_sentimiento.map((id,sentimiento) =>{
     let valor=$(sentimiento).attr("valor")
     let mes = $(sentimiento).attr("fecha").split("-")[1];
 
-   if(valor!=""){
+    if(valor!=""){
         feeling.push(valor.trim())
         meses.push(mes)
-   }
+    }
 });
 
 
@@ -103,49 +103,47 @@ for(i=0;i< feeling.length;i++){
     switch(meses[i]) {
         case "01":
             sentimientos01.push(feeling[i])
-          break;
-         case "02":
-                sentimientos02.push(feeling[i])
             break;
-          case "03":
-                sentimientos03.push(feeling[i])
-                break;
-            case "04":
-                sentimientos04.push(feeling[i])
-                break;
-            case "05":
-                sentimientos05.push(feeling[i])
-                break; 
-            case "06":
-                sentimientos06.push(feeling[i])
-                break;
-            case "07":
-               sentimientos07.push(feeling[i])
+        case "02":
+            sentimientos02.push(feeling[i])
             break;
-            case "08":
-                sentimientos08.push(feeling[i])
+        case "03":
+            sentimientos03.push(feeling[i])
             break;
-            case "09":
-                 sentimientos09.push(feeling[i])
+        case "04":
+            sentimientos04.push(feeling[i])
             break;
-            case "10":
-                  sentimientos10.push(feeling[i])
+        case "05":
+            sentimientos05.push(feeling[i])
+            break; 
+        case "06":
+            sentimientos06.push(feeling[i])
             break;
-            case "11":
-                  sentimientos11.push(feeling[i])
+        case "07":
+            sentimientos07.push(feeling[i])
             break;
-            case "12":
-                   sentimientos12.push(feeling[i]);
+        case "08":
+            sentimientos08.push(feeling[i])
+        break;
+        case "09":
+            sentimientos09.push(feeling[i])
+            break;
+        case "10":
+            sentimientos10.push(feeling[i])
+            break;
+        case "11":
+            sentimientos11.push(feeling[i])
+            break;
+        case "12":
+            sentimientos12.push(feeling[i]);
             break;
         default:
-      }
+    }
 }
-
 
 console.log(sentimientos04)
 
 /*******************************para las sentimientos*********************************************/
-
 /*******************************Grafica 1*********************************************************************** */
 for(i=0;i<sentimientos01.length;i++){
     if(sentimientos01[i]==positivo){
@@ -154,8 +152,7 @@ for(i=0;i<sentimientos01.length;i++){
         num_positivo=num_positivo+1;
     }else if(sentimientos01[i]==neutro){
         num_neutro=num_neutro+1;
-    } 
-    
+    }
 }
 console.log(num_positivo)
 var myChart= new Chart(ctx,{
@@ -169,7 +166,6 @@ var myChart= new Chart(ctx,{
                 'rgb(122, 151, 44)',
                 'rgb(78, 151, 44)',
                 'rgb(44, 151, 58)',
-    
             ]
         }]
     },
@@ -210,7 +206,6 @@ var myChart2= new Chart(ctx2,{
                 'rgb(44, 151, 97)',
                 'rgb(44, 151, 137)',
                 'rgb(44, 130, 151)',
-    
             ]
         }]
     },
@@ -251,7 +246,6 @@ var myChart3 = new Chart(ctx3,{
                 'rgb(151, 51, 44)',
                 'rgb(151, 83, 44)',
                 'rgb(151, 131, 44)',
-    
             ]
         }]
     },
@@ -290,8 +284,8 @@ var myChart4= new Chart(ctx4,{
             data:[num_positivo,num_negativo,num_neutro],
             backgroundColor:[
                 'rgb(44, 94, 151)',
-                 'rgb(55, 44, 151)',
-                 'rgb(99, 44, 151)',
+                'rgb(55, 44, 151)',
+                'rgb(99, 44, 151)',
     
             ]
         }]
@@ -371,7 +365,6 @@ var myChart6= new Chart(ctx6,{
             backgroundColor:[
                 'rgb(66, 134, 244,0.5)',
                 'rgb(74, 135, 72,0.5)',
-    
             ]
         }]
     },
@@ -409,7 +402,6 @@ var myChart7= new Chart(ctx7,{
                 'rgb(44, 151, 97)',
                 'rgb(44, 151, 137)',
                 'rgb(44, 130, 151)',
-    
             ]
         }]
     },
@@ -446,7 +438,6 @@ var myChart8= new Chart(ctx8,{
                 'rgb(44, 151, 58)',
                 'rgb(44, 151, 97)',
                 'rgb(44, 151, 137)',
-    
             ]
         }]
     },
@@ -483,7 +474,6 @@ var myChart9 = new Chart(ctx9,{
                 'rgb(44, 94, 151)',
                 'rgb(99, 44, 151)',
                 'rgb(151, 83, 44)',
-    
             ]
         }]
     },
@@ -517,12 +507,9 @@ var myChart10= new Chart(ctx10,{
             label:'Num datos',
             data:[num_negativo,num_positivo,num_neutro],
             backgroundColor:[
-
                 'rgb(78, 151, 44)',
                 'rgb(151, 44, 44)',
                 'rgb(99, 44, 151)',
-
-    
             ]
         }]
     },
@@ -559,8 +546,6 @@ var myChart11 = new Chart(ctx11,{
                 'rgb(78, 151, 44)',
                 'rgb(138, 44, 151)',
                 'rgb(151, 44, 133)',
-
-    
             ]
         }]
     },
@@ -597,7 +582,6 @@ var myChart12= new Chart(ctx12,{
                 'rgb(78, 151, 44)',
                 'rgb(151, 44, 89)',
                 'rgb(44, 94, 151)',
-    
             ]
         }]
     },
@@ -627,7 +611,6 @@ var myChart13= new Chart(ctx13,{
                 'rgb(78, 151, 44)',
                 'rgb(151, 44, 89)',
                 'rgb(44, 94, 151)',
-    
             ]
         }]
     },
