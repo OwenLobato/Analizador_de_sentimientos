@@ -12,7 +12,7 @@
             <input type="text" name="name" id="name" value="{{ page.name }}" required>
 
             <label for="followers">Seguidores</label>
-            <input type="number" name="followers" id="followers" value="{{ page.all_followers }}" required>
+            <input type="number" name="followers" id="followers" value="{{ page.all_followers }}" min="0" max="2147483647" required>
 
             <input type="submit" value="Actualizar">
         {% else %}
@@ -20,7 +20,7 @@
             <input type="text" name="name" id="name" required>
 
             <label for="followers">Seguidores</label>
-            <input type="number" name="followers" id="followers" required>
+            <input type="number" name="followers" id="followers" min="0" max="2147483647" required>
 
             <input type="submit" value="Crear">
         {% endif %}
