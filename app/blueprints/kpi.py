@@ -1,5 +1,6 @@
 """ KPI Module """
 
+import random
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for
 from blueprints.auth import login_required
 from models.file_model import File
@@ -68,7 +69,7 @@ def __get_kpi_growth_rate(page):
 def __get_kpi_post_reach(page, posts):
     # all_followers = page.all_followers
     # posts = len(posts)
-    post_reach = 20
+    post_reach = random.randint(10,30)
     return post_reach
 
 def __get_kpi_applause_rate(page, posts):
@@ -81,15 +82,15 @@ def __get_kpi_applause_rate(page, posts):
     return applause_rate
 
 def __get_kpi_avg_engagement_rate():
-    avg_engagement_rate = 40
+    avg_engagement_rate = random.randint(10,30)
     return avg_engagement_rate
 
 def __get_kpi_amplification_rate():
-    amplification_rate = 50
+    amplification_rate = random.randint(10,30)
     return amplification_rate
 
 def __get_kpi_comment_conversation_rate():
-    comment_conversation_rate = 60
+    comment_conversation_rate = random.randint(10,30)
     return comment_conversation_rate
 
 def __get_kips(file_id):
